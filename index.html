@@ -2,494 +2,461 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kringstar AI — Buyer Qualification</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Outreach Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#0F1E3C;--navy2:#162847;
-  --gold:#C9971A;--gold-lt:#F5C842;
-  --white:#FFFFFF;--muted:rgba(255,255,255,0.45);
-  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);
-  --gold-bg:rgba(201,151,26,0.10);--gold-border:rgba(201,151,26,0.35);
-}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
-.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(201,151,26,.07) 0%,transparent 60%),
-  radial-gradient(ellipse 60% 80% at 90% 80%,rgba(201,151,26,.05) 0%,transparent 60%),
-  linear-gradient(160deg,#0F1E3C 0%,#0A1628 50%,#0F1E3C 100%)}
-.grid{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(201,151,26,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,151,26,.03) 1px,transparent 1px);
-  background-size:40px 40px}
-.page{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:2.5rem 1.25rem 5rem}
-.header{text-align:center;margin-bottom:2.5rem}
-.brand{display:inline-flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:40px;padding:5px 16px;margin-bottom:1.25rem;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gold-lt)}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
-.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5.5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.02em}
-.header h1 span{color:var(--gold)}
-.header p{font-size:14px;color:var(--muted);line-height:1.6;max-width:440px;margin:0 auto}
-.prog-wrap{margin-bottom:2rem}
-.prog-labels{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:7px}
-.prog-labels .cur{color:var(--gold)}
-.prog-bar{height:2px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:2px;transition:width .5s ease;width:0%}
-.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.75rem 1.75rem 2.25rem;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,151,26,.35),transparent)}
-.step{display:none}
-.step.active{display:block;animation:up .35s ease forwards}
-@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.q-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;font-weight:500}
-.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.35rem,3.8vw,1.8rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
-.q-hint{font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5}
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{display:flex;align-items:center;gap:13px;padding:13px 17px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;font-size:14px;color:rgba(255,255,255,.75);text-align:left;width:100%;font-family:'DM Sans',sans-serif}
-.opt:hover{background:var(--gold-bg);border-color:var(--gold-border);color:var(--white)}
-.opt.sel{background:rgba(201,151,26,.13);border-color:rgba(201,151,26,.55);color:var(--white)}
-.radio{width:17px;height:17px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.opt.sel .radio{background:var(--gold);border-color:var(--gold)}
-.opt.sel .radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
-.fields{display:flex;flex-direction:column;gap:12px}
-.flabel{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;display:block}
-.finput{width:100%;padding:13px 17px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
-.finput:focus{border-color:var(--gold-border)}
-.finput::placeholder{color:rgba(255,255,255,.18)}
-.finput.err{border-color:#9B2020!important}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:10px}
-.btn-back{padding:11px 20px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
-.btn-back:hover{border-color:rgba(255,255,255,.25);color:var(--white)}
-.btn-next{flex:1;padding:13px 22px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);border:none;border-radius:10px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.3px}
-.btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,151,26,.3)}
-.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.result-wrap{text-align:center;padding:.5rem 0}
-.result-icon{font-size:3.5rem;margin-bottom:1rem}
-.result-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold-lt);margin-bottom:.4rem}
-.result-status{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1.75rem}
-.verdict{border-radius:14px;padding:1.25rem 1.5rem;text-align:left;margin-bottom:1.5rem}
-.verdict-qualified{background:rgba(201,151,26,.08);border:1px solid rgba(201,151,26,.25)}
-.verdict-unqualified{background:rgba(155,32,32,.08);border:1px solid rgba(155,32,32,.2)}
-.verdict h3{font-size:14px;font-weight:600;margin-bottom:.4rem;color:var(--gold-lt)}
-.verdict p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6}
-.restart-btn{padding:12px 28px;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:10px;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;margin-top:.5rem}
-.restart-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
-.restart-btn:disabled{opacity:.3;cursor:not-allowed}
+  :root{
+    --bg: #17181A;
+    --surface: #1F2123;
+    --surface-2: #292B2E;
+    --text: #ECE9E2;
+    --text-muted: #93908A;
+    --border: #34363A;
+    --ig: #C9508A;
+    --ig-dim: #4A2A38;
+    --email: #4E7FDB;
+    --email-dim: #263652;
+    --whatsapp: #3FA772;
+    --whatsapp-dim: #1F4636;
+    --gold: #D4A64A;
+    --danger: #C9573F;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; background: var(--bg); color: var(--text); }
+  body{
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 28px 20px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap{ max-width: 980px; margin: 0 auto; }
+  .mono{ font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .display{ font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* header */
+  header{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header h1{
+    font-size: 30px; font-weight:700; margin:0; letter-spacing:0.05em;
+  }
+  header .sub{ color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+  .streak{
+    display:flex; align-items:center; gap:10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 14px;
+  }
+  .streak .num{ font-size: 22px; font-weight:600; color: var(--gold); }
+  .streak .lbl{ font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .date-picker{
+    background: var(--surface); border:1px solid var(--border); color: var(--text);
+    border-radius: 8px; padding: 8px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;
+  }
+  .top-stat{
+    display:flex; align-items:center; gap:10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 14px;
+  }
+  .top-stat .dot{ width:10px; height:10px; border-radius:50%; }
+  .top-stat .lbl{ font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .top-stat .name{ font-size: 16px; font-weight:600; }
+
+  /* monthly overview */
+  .monthly-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
+  .monthly-head h2{ font-size: 16px; margin:0; font-weight: 700; letter-spacing: 0.03em; }
+  .monthly-block{ background: var(--surface); border:1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 26px; }
+  .monthly-total{ font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+  .monthly-total .n{ color: var(--text); font-weight:600; font-family:'IBM Plex Mono', monospace; }
+  .monthly-row{ display:flex; align-items:center; gap:14px; margin-bottom: 10px; }
+  .monthly-row:last-child{ margin-bottom:0; }
+  .monthly-label{ width: 90px; font-size: 13px; color: var(--text-muted); flex-shrink:0; display:flex; align-items:center; gap:6px; }
+  .monthly-bar-wrap{ flex:1; height: 22px; background: var(--surface-2); border-radius: 4px; overflow:hidden; }
+  .monthly-bar{ height:100%; border-radius: 4px; transition: width .4s ease; }
+  .monthly-count{ width: 50px; text-align:right; font-family:'IBM Plex Mono', monospace; font-size: 13px; flex-shrink:0; }
+
+  /* channel cards */
+  .channels{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 26px; }
+  @media (max-width: 760px){ .channels{ grid-template-columns: 1fr; } }
+  .card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; position: relative; overflow: hidden;
+  }
+  .card::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
+  }
+  .card.ig::before{ background: var(--ig); }
+  .card.email::before{ background: var(--email); }
+  .card.whatsapp::before{ background: var(--whatsapp); }
+  .card h3{ margin:0 0 12px 0; font-size: 18px; font-weight:700; padding-left: 6px; }
+  .stage-row{ display:flex; align-items:center; justify-content:space-between; padding: 6px 0 6px 6px; }
+  .stage-row + .stage-row{ border-top: 1px solid var(--surface-2); }
+  .stage-lbl{ font-size: 13px; color: var(--text-muted); }
+  .stepper{ display:flex; align-items:center; gap:8px; }
+  .stepper button{
+    width: 24px; height:24px; border-radius:6px; border:1px solid var(--border);
+    background: var(--surface-2); color: var(--text); cursor:pointer; font-size: 14px; line-height:1;
+  }
+  .stepper button:hover{ background: var(--border); }
+  .stepper .val{ min-width: 24px; text-align:center; font-size: 15px; font-weight:600; }
+
+  /* funnel */
+  .funnel-title{ font-size: 14px; color: var(--text-muted); margin: 26px 0 10px; padding-left:2px; }
+  .funnel-block{ background: var(--surface); border:1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 26px; }
+  .funnel-stage{ display:flex; align-items:center; gap:14px; margin-bottom: 10px; }
+  .funnel-stage:last-child{ margin-bottom: 0; }
+  .funnel-bar-wrap{ flex:1; height: 26px; background: var(--surface-2); border-radius: 4px; overflow:hidden; }
+  .funnel-bar{ height:100%; border-radius: 4px; transition: width .4s ease; }
+  .funnel-label{ width: 90px; font-size: 13px; color: var(--text-muted); flex-shrink:0; }
+  .funnel-count{ width: 130px; font-size: 13px; text-align:right; flex-shrink:0; }
+  .funnel-count .n{ font-weight:600; }
+  .funnel-count .pct{ color: var(--text-muted); margin-left: 6px; }
+
+  /* ledger table */
+  .ledger-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
+  .ledger-head h2{ font-size: 16px; margin:0; font-weight: 700; letter-spacing: 0.03em; }
+  .copy-btn{
+    background: var(--surface-2); border:1px solid var(--border); color: var(--text);
+    padding: 7px 12px; border-radius: 7px; font-size: 12px; cursor:pointer;
+  }
+  .copy-btn:hover{ background: var(--border); }
+  .copy-btn.copied{ color: var(--whatsapp); border-color: var(--whatsapp); }
+  table{ width:100%; border-collapse: collapse; font-size: 13px; }
+  thead th{
+    text-align:left; color: var(--text-muted); font-weight:500; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 8px; border-bottom: 1px solid var(--border);
+  }
+  tbody td{ padding: 7px 8px; border-bottom: 1px solid var(--surface-2); font-family:'IBM Plex Mono', monospace; }
+  tbody tr:hover{ background: var(--surface-2); }
+  .ch-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+  .empty-row td{ color: var(--text-muted); font-family: 'Inter', sans-serif; padding: 16px 8px; text-align:center; }
+  .table-scroll{ max-height: 260px; overflow-y:auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+  .table-scroll table{ padding: 4px 6px; }
+
+  footer{ margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align:center; }
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="grid"></div>
-<div class="page">
+<div class="wrap">
+  <header>
+    <div>
+      <h1 class="display">Outreach Ledger</h1>
+      <div class="sub" id="todayLabel"></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <input type="date" class="date-picker" id="datePicker">
+      <div class="streak">
+        <div class="num mono" id="streakNum">0</div>
+        <div class="lbl">day streak</div>
+      </div>
+      <div class="top-stat">
+        <span class="dot" id="mostUsedDot"></span>
+        <div>
+          <div class="lbl">Most used medium</div>
+          <div class="name" id="mostUsedName">–</div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <div class="header">
-    <div class="brand"><div class="dot"></div>KRINGSTAR AI<div class="dot"></div></div>
-    <h1>Find Your <span>Ideal Property</span><br>in Lagos</h1>
-    <p>Answer a few quick questions so we can match you with the right properties and agent.</p>
+  <div class="channels" id="channelCards"></div>
+
+  <div class="monthly-head">
+    <h2 class="display">Monthly reach</h2>
+    <input type="month" class="date-picker" id="monthPicker">
+  </div>
+  <div class="monthly-block" id="monthlyBlock"></div>
+
+  <div class="funnel-title display" id="funnelTitle">All-time funnel · combined</div>
+  <div class="funnel-block" id="funnelBlock"></div>
+
+  <div class="ledger-head">
+    <h2 class="display">Ledger</h2>
+    <button class="copy-btn" id="copyBtn">Copy for Sheets</button>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Channel</th><th>Sent</th><th>Replied</th><th>Booked</th><th>Closed</th></tr>
+      </thead>
+      <tbody id="ledgerBody"></tbody>
+    </table>
   </div>
 
-  <div class="prog-wrap">
-    <div class="prog-labels"><span id="prog-label">Getting Started</span><span class="cur" id="prog-pct">0%</span></div>
-    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
-  </div>
-
-  <div class="card" id="card-area"></div>
-
+  <footer>Data is stored locally to this dashboard. Use "Copy for Sheets" to paste a tab-separated snapshot straight into Google Sheets.</footer>
 </div>
 
 <script>
-// =====================================================================
-//
-//  HOW TO EDIT THIS FORM SAFELY — READ BEFORE TOUCHING ANYTHING
-//  ──────────────────────────────────────────────────────────────
-//  Only edit inside the QUESTIONS array below.
-//  Each question has:
-//    key     → field name sent to Make.com (no spaces, use underscores)
-//    text    → question shown to the user
-//    hint    → small sub-text under the question
-//    options → array of { label, qualify }
-//
-//  qualify values:
-//    true           → this answer satisfies one of the 6 contract criteria
-//    false          → neutral, captured but does not affect qualification
-//    'disqualify'   → immediately marks lead Unqualified regardless of other answers
-//
-//  ─── CONTRACT QUALIFICATION RULES (Clause 1, Kringstar AI Agreement) ───
-//
-//  A lead is QUALIFIED only when ALL SIX contract criteria are satisfied:
-//    1. Verified Contact   — phone + email provided (handled at Step 0)
-//    2. Buying Intent      — actively seeking to buy within 12 months
-//    3. Budget Alignment   — budget consistent with client's property offerings
-//    4. Timeline           — purchase within 12 months
-//    5. Finance Method     — cash, mortgage, or combination stated
-//    6. Proof of Funds     — prepared to provide proof of funds
-//
-//  The form maps to these 6 criteria via qualify:true answers.
-//  Any qualify:'disqualify' answer = immediately Unqualified.
-//  All 6 criteria must be met = Qualified.
-//
-//  DO NOT edit below the "─── END CONFIG ───" line.
-//
-// =====================================================================
-
-var WEBHOOK  = 'https://hook.us2.make.com/gh8hqll4kdltuyk1eg52zk567w1n8f1g';
-
-// ─── QUESTIONS CONFIG ────────────────────────────────────────────────
-var QUESTIONS = [
-
-  // CONTRACT CRITERION 2 & 4: Buying Intent + Timeline
-  {
-    key:  'purchase_timeline',
-    text: 'When are you looking to purchase?',
-    hint: 'We work with buyers who are actively in the market.',
-    options: [
-      { label: 'Within the next 3 months',  qualify: true },
-      { label: '3 – 6 months',              qualify: true },
-      { label: '6 – 12 months',             qualify: true },
-      { label: 'Just exploring for now',    qualify: 'disqualify' }
-    ]
-  },
-
-  // CONTRACT CRITERION 3: Budget Alignment
-  {
-    key:  'budget',
-    text: 'What is your budget range?',
-    hint: 'All responses are confidential.',
-    options: [
-      { label: 'Above ₦500,000,000',               qualify: true },
-      { label: '₦200,000,000 – ₦500,000,000',      qualify: true },
-      { label: '₦100,000,000 – ₦200,000,000',      qualify: true },
-      { label: 'Below ₦100,000,000',                qualify: 'disqualify' }
-    ]
-  },
-
-  // CONTRACT CRITERION 5: Finance Method
-  {
-    key:  'funding_method',
-    text: 'How are you planning to fund this purchase?',
-    hint: 'We work with buyers using all financing methods.',
-    options: [
-      { label: 'Outright Cash Payment',         qualify: true },
-      { label: 'Mortgage / Bank Financing',     qualify: true },
-      { label: 'Combination (Cash + Mortgage)', qualify: true },
-      { label: 'Not sure yet',                  qualify: 'disqualify' }
-    ]
-  },
-
-  // CONTRACT CRITERION 6: Proof of Funds
-  {
-    key:  'proof_of_funds',
-    text: 'Are you prepared to provide proof of funds?',
-    hint: 'High-demand properties require verification to proceed.',
-    options: [
-      { label: 'Yes, I can provide it immediately',  qualify: true },
-      { label: 'Yes, within 48 hours',               qualify: true },
-      { label: 'I would prefer not to at this stage', qualify: 'disqualify' }
-    ]
-  },
-
-  // CONTEXT QUESTIONS — captured for the agent, do not affect qualification
-  {
-    key:  'property_purpose',
-    text: 'What is the primary purpose of this property?',
-    hint: 'We have specialised inventory for both living and investing.',
-    options: [
-      { label: 'Primary Residence (to live in)',   qualify: false },
-      { label: 'Buy-to-Let (rental income)',       qualify: false },
-      { label: 'Capital Appreciation (flipping)',  qualify: false },
-      { label: 'Vacation / Second Home',           qualify: false }
-    ]
-  },
-
-  {
-    key:  'property_type',
-    text: 'What property structure are you looking for?',
-    hint: 'This helps us narrow down the most relevant inventory.',
-    options: [
-      { label: '5-Bedroom Detached House',          qualify: false },
-      { label: '4-Bedroom Terrace / Semi-Detached', qualify: false },
-      { label: 'Apartment / Penthouse',             qualify: false },
-      { label: 'Land / Development Site',           qualify: false }
-    ]
-  },
-
-  {
-    key:  'location_interest',
-    text: 'Which area are you most interested in?',
-    hint: 'We match you with agents who specialise in your preferred location.',
-    options: [
-      { label: 'Lekki / Victoria Island / Ikoyi',  qualify: false },
-      { label: 'Ajah / Sangotedo / Awoyaya',       qualify: false },
-      { label: 'Ikeja / Maryland / Magodo',        qualify: false },
-      { label: 'Abuja / Port Harcourt / Other',    qualify: false }
-    ]
-  }
-
+const CHANNELS = [
+  { key: 'ig', label: 'Instagram', color: 'var(--ig)' },
+  { key: 'email', label: 'Email', color: 'var(--email)' },
+  { key: 'whatsapp', label: 'WhatsApp', color: 'var(--whatsapp)' },
 ];
-// ─── END CONFIG ──────────────────────────────────────────────────────
+const STAGES = ['sent','replied','booked','closed'];
+const STAGE_LABELS = { sent:'Sent', replied:'Replied', booked:'Booked', closed:'Closed' };
 
+let data = { entries: {} }; // entries[date][channel] = {sent,replied,booked,closed}
+let currentDate = new Date().toISOString().slice(0,10);
+let currentMonth = new Date().toISOString().slice(0,7); // YYYY-MM
 
-// ── STATE ──
-var answers  = {};
-var contact  = { name:'', phone:'', email:'' };
-var TOTAL_Q  = QUESTIONS.length;
+function emptyStage(){ return { sent:0, replied:0, booked:0, closed:0 }; }
 
-// ── CLIENT NAME from GitHub repo URL ──
-// Repo named "client-james" → clientName = "Marvel"
-// Repo named "client-marvellous-sule" → clientName = "Marvellous Sule"
-// source_url (full URL) is sent to Make.com for routing/filtering
-var pathParts  = window.location.pathname.split('/').filter(function(p){
-  return p.length > 0 && p.indexOf('.') === -1;
-});
-var repoSlug   = pathParts[0] || 'unknown';
-var clientName = repoSlug
-  .replace(/^client[-_]?/i, '')
-  .split(/[-_]/)
-  .filter(Boolean)
-  .map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); })
-  .join(' ') || repoSlug;
+function ensureEntry(date, ch){
+  if(!data.entries[date]) data.entries[date] = {};
+  if(!data.entries[date][ch]) data.entries[date][ch] = emptyStage();
+  return data.entries[date][ch];
+}
 
-// ── BUILD FORM HTML FROM CONFIG ──
-(function buildForm() {
-  var card = document.getElementById('card-area');
-  var html = '';
-
-  // Step 0: contact details (satisfies Contract Criterion 1: Verified Contact)
-  html += '<div class="step active" id="step-0">';
-  html += '<div class="q-num">Before We Begin</div>';
-  html += '<div class="q-text">Your Contact Details</div>';
-  html += '<div class="q-hint">So we can connect you with the right agent.</div>';
-  html += '<div class="fields">';
-  html += '<div><label class="flabel">Full Name</label><input class="finput" id="f-name" type="text" placeholder="e.g. Adebayo Okafor" autocomplete="name"></div>';
-  html += '<div><label class="flabel">WhatsApp Number</label><input class="finput" id="f-phone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel"></div>';
-  html += '<div><label class="flabel">Email Address</label><input class="finput" id="f-email" type="email" placeholder="e.g. you@email.com" autocomplete="email"></div>';
-  html += '</div>';
-  html += '<div class="nav"><button class="btn-next" onclick="step0Next()">Continue →</button></div>';
-  html += '</div>';
-
-  // Question steps
-  for (var i = 0; i < QUESTIONS.length; i++) {
-    var q   = QUESTIONS[i];
-    var num = i + 1;
-    html += '<div class="step" id="step-' + num + '">';
-    html += '<div class="q-num">Question ' + num + ' of ' + TOTAL_Q + '</div>';
-    html += '<div class="q-text">' + q.text + '</div>';
-    html += '<div class="q-hint">' + q.hint + '</div>';
-    html += '<div class="opts" id="opts-' + num + '">';
-    for (var j = 0; j < q.options.length; j++) {
-      html += '<button class="opt" onclick="pick(' + num + ',' + j + ',this)"><div class="radio"></div>' + q.options[j].label + '</button>';
+async function loadData(){
+  try{
+    const res = await window.storage.get('outreach-data', false);
+    if(res && res.value){
+      data = JSON.parse(res.value);
+      if(!data.entries) data.entries = {};
     }
-    html += '</div><div class="nav">';
-    html += '<button class="btn-back" onclick="goBack(' + num + ')">← Back</button>';
-    if (num < TOTAL_Q) {
-      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="goNext(' + num + ')">Continue →</button>';
+  }catch(e){
+    data = { entries: {} };
+  }
+}
+
+async function saveData(){
+  try{
+    await window.storage.set('outreach-data', JSON.stringify(data), false);
+  }catch(e){
+    console.error('Save failed', e);
+  }
+}
+
+function fmtDateLabel(d){
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+
+function computeStreak(){
+  let streak = 0;
+  let d = new Date();
+  while(true){
+    const key = d.toISOString().slice(0,10);
+    const dayEntries = data.entries[key];
+    const hasActivity = dayEntries && CHANNELS.some(c => dayEntries[c.key] && dayEntries[c.key].sent > 0);
+    if(hasActivity){
+      streak++;
+      d.setDate(d.getDate() - 1);
     } else {
-      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="submitForm()">Submit →</button>';
-    }
-    html += '</div></div>';
-  }
-
-  // Result step
-  html += '<div class="step" id="step-result">';
-  html += '<div class="result-wrap">';
-  html += '<div class="result-icon" id="result-icon">✅</div>';
-  html += '<div class="result-title">Submission Received</div>';
-  html += '<div class="result-status" id="send-status">Sending your details…</div>';
-  html += '<div id="verdict-box"></div>';
-  html += '<button class="restart-btn" id="restart-btn" onclick="restart()" disabled>↩ Submit Another Response</button>';
-  html += '</div></div>';
-
-  card.innerHTML = html;
-})();
-
-// ── PROGRESS ──
-function setProgress(step) {
-  var pct = step === 0 ? 0 : Math.round((step / (TOTAL_Q + 1)) * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent  = pct + '%';
-  document.getElementById('prog-label').textContent =
-    step === 0      ? 'Getting Started' :
-    step <= TOTAL_Q ? 'Question ' + step + ' of ' + TOTAL_Q :
-    'Complete';
-}
-
-// ── SHOW STEP ──
-function showStep(n) {
-  document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById('step-' + n).classList.add('active');
-  setProgress(typeof n === 'number' ? n : TOTAL_Q + 1);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ── CONTACT STEP ──
-function step0Next() {
-  var nameEl  = document.getElementById('f-name');
-  var phoneEl = document.getElementById('f-phone');
-  var emailEl = document.getElementById('f-email');
-  var name    = nameEl.value.trim();
-  var phone   = phoneEl.value.trim();
-  var email   = emailEl.value.trim();
-
-  nameEl.classList.remove('err');
-  phoneEl.classList.remove('err');
-  emailEl.classList.remove('err');
-
-  var ok = true;
-  if (name.length < 2)  { nameEl.classList.add('err');  ok = false; }
-  if (phone.length < 7) { phoneEl.classList.add('err'); ok = false; }
-  if (email.length > 0 && email.indexOf('@') === -1) { emailEl.classList.add('err'); ok = false; }
-  if (!ok) return;
-
-  contact.name  = name;
-  contact.phone = phone;
-  contact.email = email;
-  showStep(1);
-}
-
-// ── PICK OPTION ──
-function pick(stepNum, optIndex, el) {
-  document.querySelectorAll('#opts-' + stepNum + ' .opt').forEach(function(o){ o.classList.remove('sel'); });
-  el.classList.add('sel');
-
-  answers[stepNum] = {
-    label:   QUESTIONS[stepNum - 1].options[optIndex].label,
-    key:     QUESTIONS[stepNum - 1].key,
-    qualify: QUESTIONS[stepNum - 1].options[optIndex].qualify
-  };
-
-  var btn = document.getElementById('btn-' + stepNum);
-  if (btn) btn.disabled = false;
-
-  setTimeout(function() {
-    if (stepNum < TOTAL_Q) goNext(stepNum);
-  }, 420);
-}
-
-function goNext(current) {
-  if (!answers[current]) return;
-  showStep(current + 1);
-}
-
-function goBack(current) {
-  showStep(current - 1);
-}
-
-// ── QUALIFICATION LOGIC (mirrors Clause 1 of Kringstar AI Agreement) ──
-// A lead is Qualified ONLY when:
-//   - No answer has qualify:'disqualify'
-//   - All 4 contract criteria questions (timeline, budget, funding, proof_of_funds)
-//     received a qualify:true answer
-// Context questions (purpose, property type, location) never affect the result.
-function calcQualification() {
-  for (var i = 1; i <= TOTAL_Q; i++) {
-    if (answers[i] && answers[i].qualify === 'disqualify') return 'Unqualified';
-  }
-  // Check every question that HAS a qualify:true option — did the lead pick it?
-  for (var i = 0; i < QUESTIONS.length; i++) {
-    var hasQualifyOption = false;
-    for (var j = 0; j < QUESTIONS[i].options.length; j++) {
-      if (QUESTIONS[i].options[j].qualify === true) { hasQualifyOption = true; break; }
-    }
-    if (hasQualifyOption) {
-      var stepNum = i + 1;
-      if (!answers[stepNum] || answers[stepNum].qualify !== true) return 'Unqualified';
+      break;
     }
   }
-  return 'Qualified';
+  return streak;
 }
 
-// ── SUBMIT ──
-function submitForm() {
-  console.log('submitForm() called — building payload...');
-  var status      = calcQualification();
-  var isQualified = (status === 'Qualified');
-
-  showStep('result');
-  document.getElementById('prog-fill').style.width = '100%';
-  document.getElementById('prog-pct').textContent  = '100%';
-  document.getElementById('prog-label').textContent = 'Complete';
-  document.getElementById('result-icon').textContent = isQualified ? '✅' : '📋';
-
-  document.getElementById('verdict-box').innerHTML =
-    '<div class="verdict ' + (isQualified ? 'verdict-qualified' : 'verdict-unqualified') + '">' +
-    '<h3>' + (isQualified ? 'You are a Strong Buyer Match' : 'Thank You for Your Interest') + '</h3>' +
-    '<p>' + (isQualified
-      ? 'Based on your responses you show strong intent and readiness. An agent will contact you within 2 hours to discuss available properties.'
-      : 'Your details have been received. Our team will review your profile and reach out with helpful market information.') +
-    '</p></div>';
-
-  // ── FORMDATA PAYLOAD ──
-  var fd = new FormData();
-
-  // Routing fields — use source_url in Make.com to filter by client
-  fd.append('source_url',  window.location.href);   // full URL — filter/route in Make
-  fd.append('client_name', clientName);              // clean name from repo slug
-
-  // Contact (Contract Criterion 1: Verified Contact)
-  fd.append('full_name', contact.name);
-  fd.append('whatsapp',  contact.phone);
-  fd.append('email',     contact.email);
-
-  // Qualification result
-  fd.append('qualification_status', status);
-
-  // All question answers
-  for (var i = 1; i <= TOTAL_Q; i++) {
-    fd.append(QUESTIONS[i - 1].key, answers[i] ? answers[i].label : '');
-  }
-
-  fd.append('submitted_at', new Date().toISOString());
-
-  console.log('Payload ready. Sending to webhook:', WEBHOOK);
-  console.log('Fields: source_url=' + window.location.href + ' | full_name=' + contact.name + ' | status=' + status);
-
-  // Use XMLHttpRequest — more reliable than fetch for cross-origin FormData
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', WEBHOOK, true);
-
-  xhr.onload = function() {
-    var el = document.getElementById('send-status');
-    if (xhr.status >= 200 && xhr.status < 300) {
-      if (el) el.textContent = 'Your details have been submitted successfully.';
-    } else {
-      // Still show success to user but log the real error
-      if (el) el.textContent = 'Your details have been submitted successfully.';
-      console.error('Webhook error status:', xhr.status, xhr.responseText);
-    }
-    var btn = document.getElementById('restart-btn');
-    if (btn) btn.disabled = false;
-  };
-
-  xhr.onerror = function() {
-    // Network error — try fallback with no-cors mode
-    var el = document.getElementById('send-status');
-    if (el) el.textContent = 'Your details have been submitted successfully.';
-    console.error('XHR network error — trying fetch fallback');
-
-    fetch(WEBHOOK, {
-      method: 'POST',
-      mode:   'no-cors',
-      body:   fd
-    }).catch(function(e) {
-      console.error('Fetch fallback also failed:', e);
+function renderChannelCards(){
+  const container = document.getElementById('channelCards');
+  container.innerHTML = '';
+  CHANNELS.forEach(ch => {
+    const entry = ensureEntry(currentDate, ch.key);
+    const card = document.createElement('div');
+    card.className = 'card ' + ch.key;
+    card.innerHTML = `<h3>${ch.label}</h3>` + STAGES.map(stage => `
+      <div class="stage-row">
+        <span class="stage-lbl">${STAGE_LABELS[stage]}</span>
+        <span class="stepper">
+          <button data-ch="${ch.key}" data-stage="${stage}" data-delta="-1">–</button>
+          <span class="val mono" id="val-${ch.key}-${stage}">${entry[stage]}</span>
+          <button data-ch="${ch.key}" data-stage="${stage}" data-delta="1">+</button>
+        </span>
+      </div>
+    `).join('');
+    container.appendChild(card);
+  });
+  container.querySelectorAll('button[data-ch]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const ch = btn.dataset.ch, stage = btn.dataset.stage, delta = parseInt(btn.dataset.delta, 10);
+      const entry = ensureEntry(currentDate, ch);
+      entry[stage] = Math.max(0, entry[stage] + delta);
+      document.getElementById(`val-${ch}-${stage}`).textContent = entry[stage];
+      await saveData();
+      renderFunnel();
+      renderLedger();
+      renderStreak();
+      renderMonthly();
+      renderMostUsed();
     });
-
-    var btn = document.getElementById('restart-btn');
-    if (btn) btn.disabled = false;
-  };
-
-  xhr.send(fd);
+  });
 }
 
-// ── RESTART ──
-function restart() {
-  answers = {};
-  contact = { name:'', phone:'', email:'' };
-  document.getElementById('f-name').value  = '';
-  document.getElementById('f-phone').value = '';
-  document.getElementById('f-email').value = '';
-  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
-  document.querySelectorAll('[id^="btn-"]').forEach(function(b){ b.disabled = true; });
-  showStep(0);
+function allTimeTotals(){
+  const totals = emptyStage();
+  Object.values(data.entries).forEach(dayObj => {
+    Object.values(dayObj).forEach(chEntry => {
+      STAGES.forEach(s => totals[s] += (chEntry[s] || 0));
+    });
+  });
+  return totals;
 }
+
+function renderFunnel(){
+  const totals = allTimeTotals();
+  const block = document.getElementById('funnelBlock');
+  const max = Math.max(totals.sent, 1);
+  const colors = { sent: '#8B8F94', replied: 'var(--email)', booked: 'var(--gold)', closed: 'var(--whatsapp)' };
+  block.innerHTML = STAGES.map((stage, i) => {
+    const count = totals[stage];
+    const width = Math.max((count / max) * 100, count > 0 ? 3 : 0);
+    let pctLabel = '';
+    if(i > 0){
+      const prev = totals[STAGES[i-1]];
+      const pct = prev > 0 ? Math.round((count / prev) * 100) : 0;
+      pctLabel = `<span class="pct">${pct}% of ${STAGE_LABELS[STAGES[i-1]].toLowerCase()}</span>`;
+    }
+    return `
+      <div class="funnel-stage">
+        <div class="funnel-label">${STAGE_LABELS[stage]}</div>
+        <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${width}%; background:${colors[stage]};"></div></div>
+        <div class="funnel-count mono"><span class="n">${count}</span>${pctLabel}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderLedger(){
+  const body = document.getElementById('ledgerBody');
+  const rows = [];
+  Object.keys(data.entries).sort().reverse().forEach(date => {
+    CHANNELS.forEach(ch => {
+      const e = data.entries[date][ch.key];
+      if(e && (e.sent||e.replied||e.booked||e.closed)){
+        rows.push({ date, ch, e });
+      }
+    });
+  });
+  if(rows.length === 0){
+    body.innerHTML = `<tr class="empty-row"><td colspan="6">No outreach logged yet — use the counters above to start today's log.</td></tr>`;
+    return;
+  }
+  body.innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.date}</td>
+      <td><span class="ch-dot" style="background:${r.ch.color}"></span>${r.ch.label}</td>
+      <td>${r.e.sent}</td>
+      <td>${r.e.replied}</td>
+      <td>${r.e.booked}</td>
+      <td>${r.e.closed}</td>
+    </tr>
+  `).join('');
+}
+
+function renderStreak(){
+  document.getElementById('streakNum').textContent = computeStreak();
+}
+
+function monthlyTotalsFor(month){
+  const totals = {};
+  CHANNELS.forEach(ch => totals[ch.key] = 0);
+  Object.keys(data.entries).forEach(date => {
+    if(date.slice(0,7) !== month) return;
+    CHANNELS.forEach(ch => {
+      const e = data.entries[date][ch.key];
+      if(e) totals[ch.key] += (e.sent || 0);
+    });
+  });
+  return totals;
+}
+
+function renderMonthly(){
+  const totals = monthlyTotalsFor(currentMonth);
+  const grandTotal = Object.values(totals).reduce((a,b) => a+b, 0);
+  const max = Math.max(...Object.values(totals), 1);
+  const block = document.getElementById('monthlyBlock');
+  const monthLabel = new Date(currentMonth + '-01T00:00:00').toLocaleDateString(undefined, { month:'long', year:'numeric' });
+  block.innerHTML = `<div class="monthly-total">Total reach in <span class="n">${monthLabel}</span>: <span class="n">${grandTotal}</span> people contacted</div>` +
+    CHANNELS.map(ch => {
+      const count = totals[ch.key];
+      const width = Math.max((count / max) * 100, count > 0 ? 3 : 0);
+      return `
+        <div class="monthly-row">
+          <div class="monthly-label"><span class="ch-dot" style="background:${ch.color}"></span>${ch.label}</div>
+          <div class="monthly-bar-wrap"><div class="monthly-bar" style="width:${width}%; background:${ch.color};"></div></div>
+          <div class="monthly-count">${count}</div>
+        </div>
+      `;
+    }).join('');
+}
+
+function renderMostUsed(){
+  const totals = {};
+  CHANNELS.forEach(ch => totals[ch.key] = 0);
+  Object.values(data.entries).forEach(dayObj => {
+    CHANNELS.forEach(ch => {
+      const e = dayObj[ch.key];
+      if(e) totals[ch.key] += (e.sent || 0);
+    });
+  });
+  let topKey = null, topVal = -1;
+  CHANNELS.forEach(ch => { if(totals[ch.key] > topVal){ topVal = totals[ch.key]; topKey = ch.key; } });
+  const top = CHANNELS.find(c => c.key === topKey);
+  const nameEl = document.getElementById('mostUsedName');
+  const dotEl = document.getElementById('mostUsedDot');
+  if(!top || topVal <= 0){
+    nameEl.textContent = 'No data yet';
+    dotEl.style.background = 'var(--border)';
+  } else {
+    nameEl.textContent = `${top.label} (${topVal})`;
+    dotEl.style.background = top.color;
+  }
+}
+
+function buildTSV(){
+  const rows = [['Date','Channel','Sent','Replied','Booked','Closed']];
+  Object.keys(data.entries).sort().forEach(date => {
+    CHANNELS.forEach(ch => {
+      const e = data.entries[date][ch.key];
+      if(e && (e.sent||e.replied||e.booked||e.closed)){
+        rows.push([date, ch.label, e.sent, e.replied, e.booked, e.closed]);
+      }
+    });
+  });
+  return rows.map(r => r.join('\t')).join('\n');
+}
+
+async function init(){
+  await loadData();
+  document.getElementById('todayLabel').textContent = fmtDateLabel(currentDate);
+  document.getElementById('datePicker').value = currentDate;
+  document.getElementById('datePicker').addEventListener('change', (e) => {
+    currentDate = e.target.value || currentDate;
+    document.getElementById('todayLabel').textContent = fmtDateLabel(currentDate);
+    renderChannelCards();
+  });
+  document.getElementById('monthPicker').value = currentMonth;
+  document.getElementById('monthPicker').addEventListener('change', (e) => {
+    currentMonth = e.target.value || currentMonth;
+    renderMonthly();
+  });
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const tsv = buildTSV();
+    try{
+      await navigator.clipboard.writeText(tsv);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy for Sheets'; btn.classList.remove('copied'); }, 1800);
+    }catch(e){
+      alert('Could not copy automatically — select and copy the ledger manually.');
+    }
+  });
+  renderChannelCards();
+  renderFunnel();
+  renderLedger();
+  renderStreak();
+  renderMonthly();
+  renderMostUsed();
+}
+
+init();
 </script>
 </body>
 </html>
