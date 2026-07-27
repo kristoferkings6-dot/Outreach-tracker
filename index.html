@@ -43,7 +43,7 @@
   .brand h1{ font-size:21px; font-weight:700; margin:0; letter-spacing:-0.01em; }
   .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; }
   .chips{ display:flex; gap:10px; flex-wrap:wrap; }
-  .chip{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
+  .chip glass{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
   .chip .v{ color:var(--text); font-weight:600; font-family:'IBM Plex Mono',monospace; font-size:14px; }
   .chip .dot{ width:8px; height:8px; border-radius:50%; }
 
@@ -199,6 +199,9 @@
 </div>
 
 <script>
+// REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+const GOOGLE_SHEET_URL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE';
+
 const PLATFORMS = [
   { key:'Instagram', color:'var(--ig)' },
   { key:'Email', color:'var(--email)' },
@@ -233,6 +236,27 @@ async function loadData(){
 async function saveData(){
   try{ await window.storage.set('atlas-prospects', JSON.stringify(prospects), false); }
   catch(e){ console.error('save failed', e); }
+}
+
+// FUNCTION TO SEND DATA TO GOOGLE SHEETS
+async function sendToGoogleSheets(data) {
+  if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return;
+  
+  const params = new URLSearchParams();
+  for (const key in data) {
+    params.append(key, data[key]);
+  }
+
+  try {
+    await fetch(GOOGLE_SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors', // This is required for Google Apps Script Web Apps
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+  } catch (e) {
+    console.error('Google Sheets sync failed', e);
+  }
 }
 
 function animateValue(el, to){
@@ -278,7 +302,6 @@ function renderKPIs(){
   const closed = prospects.filter(p => p.status === 'Closed Won').length;
   const replyRate = total ? Math.round((replied/total)*100) : 0;
 
-  // 14-day sparkline of contacts
   const days = [];
   for(let i=13;i>=0;i--){
     const d = new Date(); d.setDate(d.getDate()-i);
@@ -313,7 +336,10 @@ function renderKPIs(){
       </svg>
     </div>
   `;
-  grid.querySelectorAll('.cval').forEach(el => animateValue(el, cards[+el.dataset.i].val));
+  cards.forEach((c,i) => {
+    const el = grid.querySelector(`[data-i="${i}"]`);
+    animateValue(el, c.val);
+  });
 }
 
 function renderFunnel(){
@@ -490,21 +516,29 @@ async function init(){
     const name = document.getElementById('f-name').value.trim();
     const company = document.getElementById('f-company').value.trim();
     if(!name){ alert('Enter a prospect name first.'); return; }
-    prospects.push({
+    
+    const newProspect = {
       id: uid(),
       date: todayStr(),
       name, company,
       platform: document.getElementById('f-platform').value,
       status: document.getElementById('f-status').value,
-      nextFollowUp: document.getElementById('f-nextfollowup').value,
+      nextfollowup: document.getElementById('f-nextfollowup').value,
       notes: document.getElementById('f-notes').value.trim(),
-    });
+    };
+    
+    prospects.push(newProspect);
+    
     document.getElementById('f-name').value = '';
     document.getElementById('f-company').value = '';
     document.getElementById('f-nextfollowup').value = '';
     document.getElementById('f-notes').value = '';
+    
     await saveData();
     renderAll();
+    
+    // SYNC TO GOOGLE SHEETS
+    sendToGoogleSheets(newProspect);
   });
   renderAll();
 }
