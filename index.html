@@ -2,460 +2,512 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Outreach Ledger</title>
+<title>Kringstar Atlas — Outreach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #17181A;
-    --surface: #1F2123;
-    --surface-2: #292B2E;
-    --text: #ECE9E2;
-    --text-muted: #93908A;
-    --border: #34363A;
-    --ig: #C9508A;
-    --ig-dim: #4A2A38;
-    --email: #4E7FDB;
-    --email-dim: #263652;
-    --whatsapp: #3FA772;
-    --whatsapp-dim: #1F4636;
-    --gold: #D4A64A;
-    --danger: #C9573F;
+    --bg-0:#0A0B10; --bg-1:#12131B;
+    --glass:rgba(255,255,255,0.045); --glass-bd:rgba(255,255,255,0.09);
+    --glass-hi:rgba(255,255,255,0.07);
+    --text:#F2F1EE; --text-muted:#8D8FA0; --text-dim:#5C5E6E;
+    --primary:#6E5BFF; --primary-soft:rgba(110,91,255,0.16);
+    --mint:#31D6BE; --gold:#F0AE4E; --danger:#EE6A5F;
+    --ig:#E85D9E; --email:#4F8CFF; --whatsapp:#34C77B; --linkedin:#4E86B4; --other:#9497A6;
   }
-  *{ box-sizing: border-box; }
-  html,body{ margin:0; padding:0; background: var(--bg); color: var(--text); }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
   body{
-    font-family: 'Inter', system-ui, sans-serif;
-    padding: 28px 20px 60px;
-    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(1100px 500px at 15% -10%, rgba(110,91,255,0.16), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(49,214,190,0.10), transparent 55%),
+      var(--bg-0);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    padding:26px 22px 70px;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap{ max-width: 980px; margin: 0 auto; }
-  .mono{ font-family: 'IBM Plex Mono', ui-monospace, monospace; }
-  .display{ font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
+  .wrap{ max-width:1180px; margin:0 auto; }
+  .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; }
+  .display{ font-family:'Space Grotesk',sans-serif; }
+  .glass{
+    background:var(--glass); border:1px solid var(--glass-bd); border-radius:16px;
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 12px 32px rgba(0,0,0,0.35);
+  }
 
   /* header */
-  header{
-    display:flex; align-items:flex-end; justify-content:space-between;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 16px;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  header h1{
-    font-size: 30px; font-weight:700; margin:0; letter-spacing:0.05em;
-  }
-  header .sub{ color: var(--text-muted); font-size: 13px; margin-top: 4px; }
-  .streak{
-    display:flex; align-items:center; gap:10px;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-    padding: 8px 14px;
-  }
-  .streak .num{ font-size: 22px; font-weight:600; color: var(--gold); }
-  .streak .lbl{ font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .date-picker{
-    background: var(--surface); border:1px solid var(--border); color: var(--text);
-    border-radius: 8px; padding: 8px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;
-  }
-  .top-stat{
-    display:flex; align-items:center; gap:10px;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-    padding: 8px 14px;
-  }
-  .top-stat .dot{ width:10px; height:10px; border-radius:50%; }
-  .top-stat .lbl{ font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .top-stat .name{ font-size: 16px; font-weight:600; }
+  header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:22px; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand .mark{ width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,var(--primary),var(--mint)); flex-shrink:0; }
+  .brand h1{ font-size:21px; font-weight:700; margin:0; letter-spacing:-0.01em; }
+  .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; }
+  .chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .chip{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
+  .chip .v{ color:var(--text); font-weight:600; font-family:'IBM Plex Mono',monospace; font-size:14px; }
+  .chip .dot{ width:8px; height:8px; border-radius:50%; }
 
-  /* monthly overview */
-  .monthly-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
-  .monthly-head h2{ font-size: 16px; margin:0; font-weight: 700; letter-spacing: 0.03em; }
-  .monthly-block{ background: var(--surface); border:1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 26px; }
-  .monthly-total{ font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
-  .monthly-total .n{ color: var(--text); font-weight:600; font-family:'IBM Plex Mono', monospace; }
-  .monthly-row{ display:flex; align-items:center; gap:14px; margin-bottom: 10px; }
-  .monthly-row:last-child{ margin-bottom:0; }
-  .monthly-label{ width: 90px; font-size: 13px; color: var(--text-muted); flex-shrink:0; display:flex; align-items:center; gap:6px; }
-  .monthly-bar-wrap{ flex:1; height: 22px; background: var(--surface-2); border-radius: 4px; overflow:hidden; }
-  .monthly-bar{ height:100%; border-radius: 4px; transition: width .4s ease; }
-  .monthly-count{ width: 50px; text-align:right; font-family:'IBM Plex Mono', monospace; font-size: 13px; flex-shrink:0; }
+  /* KPI grid */
+  .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
+  @media (max-width:900px){ .kpi-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:520px){ .kpi-grid{ grid-template-columns:1fr; } }
+  .kpi{ padding:16px 18px; position:relative; }
+  .kpi .lbl{ font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--text-muted); margin-bottom:8px; }
+  .kpi .val{ font-size:28px; font-weight:600; font-family:'IBM Plex Mono',monospace; }
+  .kpi .delta{ font-size:11px; margin-top:6px; display:inline-flex; align-items:center; gap:4px; }
+  .kpi .delta.up{ color:var(--mint); }
+  .kpi .delta.down{ color:var(--danger); }
+  .kpi .delta.flat{ color:var(--text-dim); }
+  .kpi.spark{ grid-column:span 2; }
+  @media (max-width:520px){ .kpi.spark{ grid-column:span 1; } }
+  .kpi.spark svg{ margin-top:10px; width:100%; height:44px; }
 
-  /* channel cards */
-  .channels{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 26px; }
-  @media (max-width: 760px){ .channels{ grid-template-columns: 1fr; } }
-  .card{
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 16px; position: relative; overflow: hidden;
-  }
-  .card::before{
-    content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
-  }
-  .card.ig::before{ background: var(--ig); }
-  .card.email::before{ background: var(--email); }
-  .card.whatsapp::before{ background: var(--whatsapp); }
-  .card h3{ margin:0 0 12px 0; font-size: 18px; font-weight:700; padding-left: 6px; }
-  .stage-row{ display:flex; align-items:center; justify-content:space-between; padding: 6px 0 6px 6px; }
-  .stage-row + .stage-row{ border-top: 1px solid var(--surface-2); }
-  .stage-lbl{ font-size: 13px; color: var(--text-muted); }
-  .stepper{ display:flex; align-items:center; gap:8px; }
-  .stepper button{
-    width: 24px; height:24px; border-radius:6px; border:1px solid var(--border);
-    background: var(--surface-2); color: var(--text); cursor:pointer; font-size: 14px; line-height:1;
-  }
-  .stepper button:hover{ background: var(--border); }
-  .stepper .val{ min-width: 24px; text-align:center; font-size: 15px; font-weight:600; }
+  /* section titles */
+  .sec-title{ font-size:14px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin:26px 2px 10px; }
 
   /* funnel */
-  .funnel-title{ font-size: 14px; color: var(--text-muted); margin: 26px 0 10px; padding-left:2px; }
-  .funnel-block{ background: var(--surface); border:1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 26px; }
-  .funnel-stage{ display:flex; align-items:center; gap:14px; margin-bottom: 10px; }
-  .funnel-stage:last-child{ margin-bottom: 0; }
-  .funnel-bar-wrap{ flex:1; height: 26px; background: var(--surface-2); border-radius: 4px; overflow:hidden; }
-  .funnel-bar{ height:100%; border-radius: 4px; transition: width .4s ease; }
-  .funnel-label{ width: 90px; font-size: 13px; color: var(--text-muted); flex-shrink:0; }
-  .funnel-count{ width: 130px; font-size: 13px; text-align:right; flex-shrink:0; }
-  .funnel-count .n{ font-weight:600; }
-  .funnel-count .pct{ color: var(--text-muted); margin-left: 6px; }
+  .funnel{ padding:20px 22px; margin-bottom:22px; }
+  .fstage{ display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+  .fstage:last-child{ margin-bottom:0; }
+  .flabel{ width:120px; font-size:13px; color:var(--text-muted); flex-shrink:0; }
+  .fbar-wrap{ flex:1; height:28px; border-radius:6px; background:rgba(255,255,255,0.04); overflow:hidden; }
+  .fbar{ height:100%; border-radius:6px; transition:width .5s cubic-bezier(.2,.8,.2,1); background:linear-gradient(90deg,var(--primary),var(--mint)); }
+  .fcount{ width:150px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:13px; flex-shrink:0; }
+  .fcount .n{ font-weight:600; }
+  .fcount .pct{ color:var(--text-muted); margin-left:6px; }
 
-  /* ledger table */
-  .ledger-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
-  .ledger-head h2{ font-size: 16px; margin:0; font-weight: 700; letter-spacing: 0.03em; }
-  .copy-btn{
-    background: var(--surface-2); border:1px solid var(--border); color: var(--text);
-    padding: 7px 12px; border-radius: 7px; font-size: 12px; cursor:pointer;
-  }
-  .copy-btn:hover{ background: var(--border); }
-  .copy-btn.copied{ color: var(--whatsapp); border-color: var(--whatsapp); }
-  table{ width:100%; border-collapse: collapse; font-size: 13px; }
-  thead th{
-    text-align:left; color: var(--text-muted); font-weight:500; font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 8px; border-bottom: 1px solid var(--border);
-  }
-  tbody td{ padding: 7px 8px; border-bottom: 1px solid var(--surface-2); font-family:'IBM Plex Mono', monospace; }
-  tbody tr:hover{ background: var(--surface-2); }
-  .ch-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
-  .empty-row td{ color: var(--text-muted); font-family: 'Inter', sans-serif; padding: 16px 8px; text-align:center; }
-  .table-scroll{ max-height: 260px; overflow-y:auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
-  .table-scroll table{ padding: 4px 6px; }
+  /* channel cards */
+  .channels{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:22px; }
+  @media (max-width:960px){ .channels{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:600px){ .channels{ grid-template-columns:repeat(2,1fr); } }
+  .ch-card{ padding:14px 16px; border-top:3px solid transparent; }
+  .ch-card h4{ margin:0 0 10px; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; }
+  .ch-card .row{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); padding:3px 0; }
+  .ch-card .row b{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-weight:500; }
 
-  footer{ margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align:center; }
+  /* monthly */
+  .monthly-block{ padding:18px 22px; margin-bottom:22px; }
+  .monthly-block-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .picker{ background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text); border-radius:8px; padding:7px 12px; font-family:'IBM Plex Mono',monospace; font-size:13px; }
+  .mrow{ display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .mrow:last-child{ margin-bottom:0; }
+  .mlabel{ width:110px; font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px; }
+  .mbar-wrap{ flex:1; height:18px; border-radius:4px; background:rgba(255,255,255,0.04); overflow:hidden; }
+  .mbar{ height:100%; border-radius:4px; transition:width .4s ease; }
+  .mcount{ width:40px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:12px; }
+
+  /* prospect table */
+  .table-panel{ padding:18px 20px; }
+  .table-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .search-filter{ display:flex; gap:8px; flex-wrap:wrap; }
+  input[type=text], input[type=date], select{
+    background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text);
+    border-radius:8px; padding:8px 12px; font-size:13px; font-family:'Inter',sans-serif;
+  }
+  .add-form{ display:grid; grid-template-columns:repeat(6,1fr) auto; gap:8px; margin-bottom:16px; }
+  @media (max-width:960px){ .add-form{ grid-template-columns:repeat(2,1fr); } }
+  .btn{ background:linear-gradient(135deg,var(--primary),#8B7CFF); border:none; color:#fff; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn.ghost{ background:rgba(255,255,255,0.06); color:var(--text); }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  thead th{ text-align:left; color:var(--text-muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 10px; border-bottom:1px solid var(--glass-bd); cursor:pointer; user-select:none; white-space:nowrap; }
+  thead th:hover{ color:var(--text); }
+  tbody td{ padding:9px 10px; border-bottom:1px solid rgba(255,255,255,0.05); font-family:'Inter',sans-serif; }
+  tbody tr:hover{ background:rgba(255,255,255,0.025); }
+  .status-pill{ display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+  .followup-overdue{ color:var(--danger); font-weight:600; }
+  .followup-today{ color:var(--gold); font-weight:600; }
+  .row-del{ background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:15px; }
+  .row-del:hover{ color:var(--danger); }
+  .table-scroll{ max-height:420px; overflow-y:auto; }
+  .empty{ text-align:center; color:var(--text-muted); padding:24px; font-size:13px; }
+  .ch-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; }
+  footer{ margin-top:22px; font-size:11px; color:var(--text-dim); text-align:center; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div>
-      <h1 class="display">Outreach Ledger</h1>
-      <div class="sub" id="todayLabel"></div>
+    <div class="brand">
+      <div class="mark"></div>
+      <div>
+        <h1 class="display">Kringstar Atlas</h1>
+        <div class="sub">Outreach Tracker</div>
+      </div>
     </div>
-    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-      <input type="date" class="date-picker" id="datePicker">
-      <div class="streak">
-        <div class="num mono" id="streakNum">0</div>
-        <div class="lbl">day streak</div>
-      </div>
-      <div class="top-stat">
-        <span class="dot" id="mostUsedDot"></span>
-        <div>
-          <div class="lbl">Most used medium</div>
-          <div class="name" id="mostUsedName">–</div>
-        </div>
-      </div>
+    <div class="chips">
+      <div class="chip glass"><span class="dot" style="background:var(--gold)"></span>Streak <span class="v" id="streakVal">0</span></div>
+      <div class="chip glass"><span class="dot" id="mostUsedDot"></span>Top medium <span class="v" id="mostUsedVal">–</span></div>
     </div>
   </header>
 
-  <div class="channels" id="channelCards"></div>
+  <div class="kpi-grid" id="kpiGrid"></div>
 
-  <div class="monthly-head">
-    <h2 class="display">Monthly reach</h2>
-    <input type="month" class="date-picker" id="monthPicker">
-  </div>
-  <div class="monthly-block" id="monthlyBlock"></div>
+  <div class="sec-title">Funnel</div>
+  <div class="funnel glass" id="funnelBlock"></div>
 
-  <div class="funnel-title display" id="funnelTitle">All-time funnel · combined</div>
-  <div class="funnel-block" id="funnelBlock"></div>
+  <div class="sec-title">By channel</div>
+  <div class="channels" id="channelGrid"></div>
 
-  <div class="ledger-head">
-    <h2 class="display">Ledger</h2>
-    <button class="copy-btn" id="copyBtn">Copy for Sheets</button>
-  </div>
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th>Date</th><th>Channel</th><th>Sent</th><th>Replied</th><th>Booked</th><th>Closed</th></tr>
-      </thead>
-      <tbody id="ledgerBody"></tbody>
-    </table>
+  <div class="sec-title">Monthly reach</div>
+  <div class="monthly-block glass">
+    <div class="monthly-block-head">
+      <div style="font-size:12px;color:var(--text-muted)">Total people contacted, by channel</div>
+      <input type="month" class="picker" id="monthPicker">
+    </div>
+    <div id="monthlyRows"></div>
   </div>
 
-  <footer>Data is stored locally to this dashboard. Use "Copy for Sheets" to paste a tab-separated snapshot straight into Google Sheets.</footer>
+  <div class="sec-title">Prospects</div>
+  <div class="table-panel glass">
+    <div class="add-form">
+      <input type="text" id="f-name" placeholder="Name">
+      <input type="text" id="f-company" placeholder="Company">
+      <select id="f-platform"></select>
+      <select id="f-status"></select>
+      <input type="date" id="f-nextfollowup">
+      <input type="text" id="f-notes" placeholder="Notes">
+      <button class="btn" id="addBtn">Add prospect</button>
+    </div>
+    <div class="table-head">
+      <input type="text" id="searchBox" placeholder="Search name or company…" style="min-width:220px;">
+      <div class="search-filter">
+        <select id="filterStatus"><option value="">All statuses</option></select>
+        <select id="filterPlatform"><option value="">All channels</option></select>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th data-key="date">Date</th>
+            <th data-key="name">Name</th>
+            <th data-key="company">Company</th>
+            <th data-key="platform">Channel</th>
+            <th data-key="status">Status</th>
+            <th data-key="nextFollowUp">Next follow-up</th>
+            <th data-key="notes">Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>Data saves automatically to this dashboard. Built for a solo operator — no login, no team view.</footer>
 </div>
 
 <script>
-const CHANNELS = [
-  { key: 'ig', label: 'Instagram', color: 'var(--ig)' },
-  { key: 'email', label: 'Email', color: 'var(--email)' },
-  { key: 'whatsapp', label: 'WhatsApp', color: 'var(--whatsapp)' },
+const PLATFORMS = [
+  { key:'Instagram', color:'var(--ig)' },
+  { key:'Email', color:'var(--email)' },
+  { key:'WhatsApp', color:'var(--whatsapp)' },
+  { key:'LinkedIn', color:'var(--linkedin)' },
+  { key:'Other', color:'var(--other)' },
 ];
-const STAGES = ['sent','replied','booked','closed'];
-const STAGE_LABELS = { sent:'Sent', replied:'Replied', booked:'Booked', closed:'Closed' };
+const STAGE_ORDER = ['New','Contacted','Replied','Follow-up Sent','Follow-up Reply','Booked','Closed Won'];
+const STAGE_COLORS = { 'Closed Lost':'var(--danger)' };
+const STATUS_ALL = [...STAGE_ORDER, 'Closed Lost'];
+const STATUS_COLOR = (s) => {
+  if(s==='Closed Won') return { bg:'rgba(49,214,190,0.15)', fg:'var(--mint)' };
+  if(s==='Closed Lost') return { bg:'rgba(238,106,95,0.15)', fg:'var(--danger)' };
+  if(s==='Booked') return { bg:'rgba(240,174,78,0.15)', fg:'var(--gold)' };
+  if(STAGE_ORDER.indexOf(s) >= STAGE_ORDER.indexOf('Replied')) return { bg:'rgba(110,91,255,0.15)', fg:'var(--primary)' };
+  return { bg:'rgba(255,255,255,0.07)', fg:'var(--text-muted)' };
+};
 
-let data = { entries: {} }; // entries[date][channel] = {sent,replied,booked,closed}
-let currentDate = new Date().toISOString().slice(0,10);
-let currentMonth = new Date().toISOString().slice(0,7); // YYYY-MM
+let prospects = [];
+let sortKey = 'date', sortDir = -1;
+let currentMonth = new Date().toISOString().slice(0,7);
 
-function emptyStage(){ return { sent:0, replied:0, booked:0, closed:0 }; }
-
-function ensureEntry(date, ch){
-  if(!data.entries[date]) data.entries[date] = {};
-  if(!data.entries[date][ch]) data.entries[date][ch] = emptyStage();
-  return data.entries[date][ch];
-}
+function uid(){ return 'p_' + Math.random().toString(36).slice(2,10); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
 
 async function loadData(){
   try{
-    const res = await window.storage.get('outreach-data', false);
-    if(res && res.value){
-      data = JSON.parse(res.value);
-      if(!data.entries) data.entries = {};
-    }
-  }catch(e){
-    data = { entries: {} };
-  }
+    const res = await window.storage.get('atlas-prospects', false);
+    if(res && res.value) prospects = JSON.parse(res.value);
+  }catch(e){ prospects = []; }
 }
-
 async function saveData(){
-  try{
-    await window.storage.set('outreach-data', JSON.stringify(data), false);
-  }catch(e){
-    console.error('Save failed', e);
-  }
+  try{ await window.storage.set('atlas-prospects', JSON.stringify(prospects), false); }
+  catch(e){ console.error('save failed', e); }
 }
 
-function fmtDateLabel(d){
-  const dt = new Date(d + 'T00:00:00');
-  return dt.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+function animateValue(el, to){
+  const from = parseInt(el.dataset.cur || '0', 10);
+  el.dataset.cur = to;
+  const dur = 500, start = performance.now();
+  function step(t){
+    const p = Math.min((t - start) / dur, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 function computeStreak(){
-  let streak = 0;
-  let d = new Date();
+  let streak = 0, d = new Date();
+  const dates = new Set(prospects.map(p => p.date));
   while(true){
     const key = d.toISOString().slice(0,10);
-    const dayEntries = data.entries[key];
-    const hasActivity = dayEntries && CHANNELS.some(c => dayEntries[c.key] && dayEntries[c.key].sent > 0);
-    if(hasActivity){
-      streak++;
-      d.setDate(d.getDate() - 1);
-    } else {
-      break;
-    }
+    if(dates.has(key)){ streak++; d.setDate(d.getDate()-1); } else break;
   }
   return streak;
 }
 
-function renderChannelCards(){
-  const container = document.getElementById('channelCards');
-  container.innerHTML = '';
-  CHANNELS.forEach(ch => {
-    const entry = ensureEntry(currentDate, ch.key);
-    const card = document.createElement('div');
-    card.className = 'card ' + ch.key;
-    card.innerHTML = `<h3>${ch.label}</h3>` + STAGES.map(stage => `
-      <div class="stage-row">
-        <span class="stage-lbl">${STAGE_LABELS[stage]}</span>
-        <span class="stepper">
-          <button data-ch="${ch.key}" data-stage="${stage}" data-delta="-1">–</button>
-          <span class="val mono" id="val-${ch.key}-${stage}">${entry[stage]}</span>
-          <button data-ch="${ch.key}" data-stage="${stage}" data-delta="1">+</button>
-        </span>
-      </div>
-    `).join('');
-    container.appendChild(card);
-  });
-  container.querySelectorAll('button[data-ch]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const ch = btn.dataset.ch, stage = btn.dataset.stage, delta = parseInt(btn.dataset.delta, 10);
-      const entry = ensureEntry(currentDate, ch);
-      entry[stage] = Math.max(0, entry[stage] + delta);
-      document.getElementById(`val-${ch}-${stage}`).textContent = entry[stage];
-      await saveData();
-      renderFunnel();
-      renderLedger();
-      renderStreak();
-      renderMonthly();
-      renderMostUsed();
-    });
-  });
+function inRangeDays(dateStr, days){
+  const d = new Date(dateStr + 'T00:00:00');
+  const now = new Date(); now.setHours(0,0,0,0);
+  const diff = (now - d) / 86400000;
+  return diff >= 0 && diff < days;
 }
 
-function allTimeTotals(){
-  const totals = emptyStage();
-  Object.values(data.entries).forEach(dayObj => {
-    Object.values(dayObj).forEach(chEntry => {
-      STAGES.forEach(s => totals[s] += (chEntry[s] || 0));
-    });
-  });
-  return totals;
+function renderKPIs(){
+  const grid = document.getElementById('kpiGrid');
+  const today = prospects.filter(p => p.date === todayStr()).length;
+  const week = prospects.filter(p => inRangeDays(p.date, 7)).length;
+  const month = prospects.filter(p => p.date && p.date.slice(0,7) === new Date().toISOString().slice(0,7)).length;
+  const total = prospects.length;
+  const stageIdx = s => STAGE_ORDER.indexOf(s);
+  const replied = prospects.filter(p => stageIdx(p.status) >= stageIdx('Replied')).length;
+  const followUps = prospects.filter(p => stageIdx(p.status) >= stageIdx('Follow-up Sent')).length;
+  const booked = prospects.filter(p => stageIdx(p.status) >= stageIdx('Booked')).length;
+  const closed = prospects.filter(p => p.status === 'Closed Won').length;
+  const replyRate = total ? Math.round((replied/total)*100) : 0;
+
+  // 14-day sparkline of contacts
+  const days = [];
+  for(let i=13;i>=0;i--){
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const key = d.toISOString().slice(0,10);
+    days.push(prospects.filter(p => p.date === key).length);
+  }
+  const max = Math.max(...days, 1);
+  const w = 280, h = 40;
+  const pts = days.map((v,i) => `${(i/(days.length-1))*w},${h - (v/max)*h}`).join(' ');
+
+  const cards = [
+    { lbl:'Today', val: today },
+    { lbl:'This week', val: week },
+    { lbl:'This month', val: month },
+    { lbl:'Total contacted', val: total },
+    { lbl:'Replies', val: replied },
+    { lbl:'Reply rate', val: replyRate, suffix:'%' },
+    { lbl:'Follow-ups sent', val: followUps },
+    { lbl:'Booked', val: booked },
+    { lbl:'Closed won', val: closed },
+  ];
+  grid.innerHTML = cards.map((c,i) => `
+    <div class="kpi glass">
+      <div class="lbl">${c.lbl}</div>
+      <div class="val mono"><span class="cval" data-i="${i}">0</span>${c.suffix||''}</div>
+    </div>
+  `).join('') + `
+    <div class="kpi glass spark">
+      <div class="lbl">14-day contact trend</div>
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+        <polyline points="${pts}" fill="none" stroke="var(--mint)" stroke-width="2"/>
+      </svg>
+    </div>
+  `;
+  grid.querySelectorAll('.cval').forEach(el => animateValue(el, cards[+el.dataset.i].val));
 }
 
 function renderFunnel(){
-  const totals = allTimeTotals();
   const block = document.getElementById('funnelBlock');
-  const max = Math.max(totals.sent, 1);
-  const colors = { sent: '#8B8F94', replied: 'var(--email)', booked: 'var(--gold)', closed: 'var(--whatsapp)' };
-  block.innerHTML = STAGES.map((stage, i) => {
-    const count = totals[stage];
-    const width = Math.max((count / max) * 100, count > 0 ? 3 : 0);
-    let pctLabel = '';
-    if(i > 0){
-      const prev = totals[STAGES[i-1]];
-      const pct = prev > 0 ? Math.round((count / prev) * 100) : 0;
-      pctLabel = `<span class="pct">${pct}% of ${STAGE_LABELS[STAGES[i-1]].toLowerCase()}</span>`;
+  const counts = STAGE_ORDER.map(stage => prospects.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf(stage)).length);
+  const max = Math.max(counts[0], 1);
+  block.innerHTML = STAGE_ORDER.map((stage,i) => {
+    const count = counts[i];
+    const width = Math.max((count/max)*100, count>0?3:0);
+    let pct = '';
+    if(i>0){
+      const prev = counts[i-1];
+      const p = prev>0 ? Math.round((count/prev)*100) : 0;
+      pct = `<span class="pct">${p}% of ${STAGE_ORDER[i-1].toLowerCase()}</span>`;
     }
     return `
-      <div class="funnel-stage">
-        <div class="funnel-label">${STAGE_LABELS[stage]}</div>
-        <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${width}%; background:${colors[stage]};"></div></div>
-        <div class="funnel-count mono"><span class="n">${count}</span>${pctLabel}</div>
+      <div class="fstage">
+        <div class="flabel">${stage}</div>
+        <div class="fbar-wrap"><div class="fbar" style="width:${width}%"></div></div>
+        <div class="fcount mono"><span class="n">${count}</span>${pct}</div>
       </div>
     `;
   }).join('');
 }
 
-function renderLedger(){
-  const body = document.getElementById('ledgerBody');
-  const rows = [];
-  Object.keys(data.entries).sort().reverse().forEach(date => {
-    CHANNELS.forEach(ch => {
-      const e = data.entries[date][ch.key];
-      if(e && (e.sent||e.replied||e.booked||e.closed)){
-        rows.push({ date, ch, e });
-      }
-    });
-  });
-  if(rows.length === 0){
-    body.innerHTML = `<tr class="empty-row"><td colspan="6">No outreach logged yet — use the counters above to start today's log.</td></tr>`;
-    return;
-  }
-  body.innerHTML = rows.map(r => `
-    <tr>
-      <td>${r.date}</td>
-      <td><span class="ch-dot" style="background:${r.ch.color}"></span>${r.ch.label}</td>
-      <td>${r.e.sent}</td>
-      <td>${r.e.replied}</td>
-      <td>${r.e.booked}</td>
-      <td>${r.e.closed}</td>
-    </tr>
-  `).join('');
-}
-
-function renderStreak(){
-  document.getElementById('streakNum').textContent = computeStreak();
-}
-
-function monthlyTotalsFor(month){
-  const totals = {};
-  CHANNELS.forEach(ch => totals[ch.key] = 0);
-  Object.keys(data.entries).forEach(date => {
-    if(date.slice(0,7) !== month) return;
-    CHANNELS.forEach(ch => {
-      const e = data.entries[date][ch.key];
-      if(e) totals[ch.key] += (e.sent || 0);
-    });
-  });
-  return totals;
+function renderChannels(){
+  const grid = document.getElementById('channelGrid');
+  grid.innerHTML = PLATFORMS.map(pl => {
+    const rows = prospects.filter(p => p.platform === pl.key);
+    const sent = rows.length;
+    const replied = rows.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf('Replied')).length;
+    const booked = rows.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf('Booked')).length;
+    const conv = sent ? Math.round((booked/sent)*100) : 0;
+    return `
+      <div class="ch-card glass" style="border-top-color:${pl.color}">
+        <h4><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</h4>
+        <div class="row"><span>Sent</span><b>${sent}</b></div>
+        <div class="row"><span>Replied</span><b>${replied}</b></div>
+        <div class="row"><span>Booked</span><b>${booked}</b></div>
+        <div class="row"><span>Conversion</span><b>${conv}%</b></div>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderMonthly(){
-  const totals = monthlyTotalsFor(currentMonth);
-  const grandTotal = Object.values(totals).reduce((a,b) => a+b, 0);
+  const wrap = document.getElementById('monthlyRows');
+  const totals = {};
+  PLATFORMS.forEach(pl => totals[pl.key] = 0);
+  prospects.forEach(p => { if(p.date && p.date.slice(0,7) === currentMonth) totals[p.platform] = (totals[p.platform]||0)+1; });
   const max = Math.max(...Object.values(totals), 1);
-  const block = document.getElementById('monthlyBlock');
-  const monthLabel = new Date(currentMonth + '-01T00:00:00').toLocaleDateString(undefined, { month:'long', year:'numeric' });
-  block.innerHTML = `<div class="monthly-total">Total reach in <span class="n">${monthLabel}</span>: <span class="n">${grandTotal}</span> people contacted</div>` +
-    CHANNELS.map(ch => {
-      const count = totals[ch.key];
-      const width = Math.max((count / max) * 100, count > 0 ? 3 : 0);
-      return `
-        <div class="monthly-row">
-          <div class="monthly-label"><span class="ch-dot" style="background:${ch.color}"></span>${ch.label}</div>
-          <div class="monthly-bar-wrap"><div class="monthly-bar" style="width:${width}%; background:${ch.color};"></div></div>
-          <div class="monthly-count">${count}</div>
-        </div>
-      `;
-    }).join('');
+  wrap.innerHTML = PLATFORMS.map(pl => {
+    const count = totals[pl.key] || 0;
+    const width = Math.max((count/max)*100, count>0?3:0);
+    return `
+      <div class="mrow">
+        <div class="mlabel"><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</div>
+        <div class="mbar-wrap"><div class="mbar" style="width:${width}%; background:${pl.color}"></div></div>
+        <div class="mcount mono">${count}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderMostUsed(){
   const totals = {};
-  CHANNELS.forEach(ch => totals[ch.key] = 0);
-  Object.values(data.entries).forEach(dayObj => {
-    CHANNELS.forEach(ch => {
-      const e = dayObj[ch.key];
-      if(e) totals[ch.key] += (e.sent || 0);
-    });
-  });
-  let topKey = null, topVal = -1;
-  CHANNELS.forEach(ch => { if(totals[ch.key] > topVal){ topVal = totals[ch.key]; topKey = ch.key; } });
-  const top = CHANNELS.find(c => c.key === topKey);
-  const nameEl = document.getElementById('mostUsedName');
+  PLATFORMS.forEach(pl => totals[pl.key] = 0);
+  prospects.forEach(p => totals[p.platform] = (totals[p.platform]||0)+1);
+  let top=null, val=-1;
+  PLATFORMS.forEach(pl => { if(totals[pl.key] > val){ val = totals[pl.key]; top = pl; } });
+  const nameEl = document.getElementById('mostUsedVal');
   const dotEl = document.getElementById('mostUsedDot');
-  if(!top || topVal <= 0){
-    nameEl.textContent = 'No data yet';
-    dotEl.style.background = 'var(--border)';
-  } else {
-    nameEl.textContent = `${top.label} (${topVal})`;
-    dotEl.style.background = top.color;
-  }
+  if(!top || val<=0){ nameEl.textContent = '–'; dotEl.style.background='var(--text-dim)'; }
+  else { nameEl.textContent = `${top.key} (${val})`; dotEl.style.background = top.color; }
 }
 
-function buildTSV(){
-  const rows = [['Date','Channel','Sent','Replied','Booked','Closed']];
-  Object.keys(data.entries).sort().forEach(date => {
-    CHANNELS.forEach(ch => {
-      const e = data.entries[date][ch.key];
-      if(e && (e.sent||e.replied||e.booked||e.closed)){
-        rows.push([date, ch.label, e.sent, e.replied, e.booked, e.closed]);
-      }
+function renderStreak(){ animateValue(document.getElementById('streakVal'), computeStreak()); }
+
+function filteredSortedRows(){
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  const fs = document.getElementById('filterStatus').value;
+  const fp = document.getElementById('filterPlatform').value;
+  let rows = prospects.filter(p => {
+    if(q && !(p.name.toLowerCase().includes(q) || p.company.toLowerCase().includes(q))) return false;
+    if(fs && p.status !== fs) return false;
+    if(fp && p.platform !== fp) return false;
+    return true;
+  });
+  rows.sort((a,b) => {
+    let av = a[sortKey] || '', bv = b[sortKey] || '';
+    if(av < bv) return -1*sortDir;
+    if(av > bv) return 1*sortDir;
+    return 0;
+  });
+  return rows;
+}
+
+function renderTable(){
+  const tbody = document.getElementById('tbody');
+  const rows = filteredSortedRows();
+  if(rows.length === 0){
+    tbody.innerHTML = `<tr><td colspan="8" class="empty">No prospects yet — add one above to start tracking.</td></tr>`;
+    return;
+  }
+  const now = todayStr();
+  tbody.innerHTML = rows.map(p => {
+    const pl = PLATFORMS.find(x => x.key === p.platform) || PLATFORMS[PLATFORMS.length-1];
+    const sc = STATUS_COLOR(p.status);
+    let nf = p.nextFollowUp || '';
+    let nfClass = '';
+    if(nf){
+      if(nf < now) nfClass = 'followup-overdue';
+      else if(nf === now) nfClass = 'followup-today';
+    }
+    return `
+      <tr data-id="${p.id}">
+        <td class="mono">${p.date}</td>
+        <td>${p.name}</td>
+        <td>${p.company}</td>
+        <td><span class="ch-dot" style="background:${pl.color}"></span> ${p.platform}</td>
+        <td><span class="status-pill" style="background:${sc.bg};color:${sc.fg}">${p.status}</span></td>
+        <td class="mono ${nfClass}">${nf || '—'}</td>
+        <td>${p.notes || ''}</td>
+        <td><button class="row-del" data-del="${p.id}">✕</button></td>
+      </tr>
+    `;
+  }).join('');
+  tbody.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      prospects = prospects.filter(p => p.id !== btn.dataset.del);
+      await saveData();
+      renderAll();
     });
   });
-  return rows.map(r => r.join('\t')).join('\n');
+}
+
+function renderAll(){
+  renderKPIs();
+  renderFunnel();
+  renderChannels();
+  renderMonthly();
+  renderMostUsed();
+  renderStreak();
+  renderTable();
+}
+
+function populateSelects(){
+  const fPlatform = document.getElementById('f-platform');
+  fPlatform.innerHTML = PLATFORMS.map(pl => `<option value="${pl.key}">${pl.key}</option>`).join('');
+  const fStatus = document.getElementById('f-status');
+  fStatus.innerHTML = STATUS_ALL.map(s => `<option value="${s}">${s}</option>`).join('');
+  const filterStatus = document.getElementById('filterStatus');
+  STATUS_ALL.forEach(s => { const o = document.createElement('option'); o.value=s; o.textContent=s; filterStatus.appendChild(o); });
+  const filterPlatform = document.getElementById('filterPlatform');
+  PLATFORMS.forEach(pl => { const o = document.createElement('option'); o.value=pl.key; o.textContent=pl.key; filterPlatform.appendChild(o); });
 }
 
 async function init(){
   await loadData();
-  document.getElementById('todayLabel').textContent = fmtDateLabel(currentDate);
-  document.getElementById('datePicker').value = currentDate;
-  document.getElementById('datePicker').addEventListener('change', (e) => {
-    currentDate = e.target.value || currentDate;
-    document.getElementById('todayLabel').textContent = fmtDateLabel(currentDate);
-    renderChannelCards();
-  });
+  populateSelects();
   document.getElementById('monthPicker').value = currentMonth;
-  document.getElementById('monthPicker').addEventListener('change', (e) => {
-    currentMonth = e.target.value || currentMonth;
-    renderMonthly();
+  document.getElementById('monthPicker').addEventListener('change', e => { currentMonth = e.target.value || currentMonth; renderMonthly(); });
+  document.getElementById('searchBox').addEventListener('input', renderTable);
+  document.getElementById('filterStatus').addEventListener('change', renderTable);
+  document.getElementById('filterPlatform').addEventListener('change', renderTable);
+  document.querySelectorAll('thead th[data-key]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      if(sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
+      renderTable();
+    });
   });
-  document.getElementById('copyBtn').addEventListener('click', async () => {
-    const tsv = buildTSV();
-    try{
-      await navigator.clipboard.writeText(tsv);
-      const btn = document.getElementById('copyBtn');
-      btn.textContent = 'Copied ✓';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'Copy for Sheets'; btn.classList.remove('copied'); }, 1800);
-    }catch(e){
-      alert('Could not copy automatically — select and copy the ledger manually.');
-    }
+  document.getElementById('addBtn').addEventListener('click', async () => {
+    const name = document.getElementById('f-name').value.trim();
+    const company = document.getElementById('f-company').value.trim();
+    if(!name){ alert('Enter a prospect name first.'); return; }
+    prospects.push({
+      id: uid(),
+      date: todayStr(),
+      name, company,
+      platform: document.getElementById('f-platform').value,
+      status: document.getElementById('f-status').value,
+      nextFollowUp: document.getElementById('f-nextfollowup').value,
+      notes: document.getElementById('f-notes').value.trim(),
+    });
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-company').value = '';
+    document.getElementById('f-nextfollowup').value = '';
+    document.getElementById('f-notes').value = '';
+    await saveData();
+    renderAll();
   });
-  renderChannelCards();
-  renderFunnel();
-  renderLedger();
-  renderStreak();
-  renderMonthly();
-  renderMostUsed();
+  renderAll();
 }
-
 init();
 </script>
 </body>
