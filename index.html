@@ -200,7 +200,7 @@
 
 <script>
 // REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx8WFIGNrLwReSQTTQAGwUIzUQF5tQCJjoTCuaUIzoY4gUHTeJ46EqOL_KEcxF9z3rS/exec';
+const GOOGLE_SHEET_URL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE';
 
 const PLATFORMS = [
   { key:'Instagram', color:'var(--ig)' },
@@ -229,14 +229,7 @@ function todayStr(){ return new Date().toISOString().slice(0,10); }
 
 async function loadData(){
   try{
-    const raw = localStorage.getItem('atlas-prospects');
-    if(raw) prospects = JSON.parse(raw);
-  }catch(e){ prospects = []; }
-}
-async function saveData(){
-  try{ localStorage.setItem('atlas-prospects', JSON.stringify(prospects)); }
-  catch(e){ console.error('save failed', e); }
-}
+    const res = await window.storage.get('atlas-prospects', false);
     if(res && res.value) prospects = JSON.parse(res.value);
   }catch(e){ prospects = []; }
 }
@@ -255,15 +248,15 @@ async function sendToGoogleSheets(data) {
   }
 
   try {
-  await fetch(GOOGLE_SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString()
-  });
-} catch (e) {
-  console.error('Google Sheets sync failed', e);
-}
+    await fetch(GOOGLE_SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors', // This is required for Google Apps Script Web Apps
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+  } catch (e) {
+    console.error('Google Sheets sync failed', e);
+  }
 }
 
 function animateValue(el, to){
