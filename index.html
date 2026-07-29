@@ -43,9 +43,20 @@
   .brand h1{ font-size:21px; font-weight:700; margin:0; letter-spacing:-0.01em; }
   .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; }
   .chips{ display:flex; gap:10px; flex-wrap:wrap; }
-  .chip glass{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
+  .chip{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
   .chip .v{ color:var(--text); font-weight:600; font-family:'IBM Plex Mono',monospace; font-size:14px; }
   .chip .dot{ width:8px; height:8px; border-radius:50%; }
+
+  /* Daily Goal Section */
+  .goal-section{ margin-bottom:22px; padding:18px 20px; }
+  .goal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .goal-title{ font-size:13px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+  .goal-controls{ display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-muted); }
+  .goal-input{ width:50px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text); border-radius:6px; padding:4px 8px; text-align:center; font-family:'IBM Plex Mono',monospace; }
+  .goal-bar-wrap{ height:12px; background:rgba(255,255,255,0.04); border-radius:6px; overflow:hidden; position:relative; }
+  .goal-bar-fill{ height:100%; width:0%; transition:width 0.5s ease, background 0.3s ease; background:var(--primary); }
+  .goal-bar-fill.complete{ background:var(--mint); box-shadow:0 0 15px rgba(49,214,190,0.3); }
+  .goal-stats{ display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text-dim); }
 
   /* KPI grid */
   .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
@@ -100,7 +111,7 @@
   .table-panel{ padding:18px 20px; }
   .table-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
   .search-filter{ display:flex; gap:8px; flex-wrap:wrap; }
-  input[type=text], input[type=date], select{
+  input[type=text], input[type=date], input[type=number], select{
     background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text);
     border-radius:8px; padding:8px 12px; font-size:13px; font-family:'Inter',sans-serif;
   }
@@ -140,6 +151,23 @@
       <div class="chip glass"><span class="dot" id="mostUsedDot"></span>Top medium <span class="v" id="mostUsedVal">–</span></div>
     </div>
   </header>
+
+  <!-- Daily Goal Feature -->
+  <div class="goal-section glass">
+    <div class="goal-header">
+      <div class="goal-title">Daily Outreach Goal</div>
+      <div class="goal-controls">
+        Target: <input type="number" id="goalTarget" class="goal-input" value="100" min="1">
+      </div>
+    </div>
+    <div class="goal-bar-wrap">
+      <div id="goalBarFill" class="goal-bar-fill"></div>
+    </div>
+    <div class="goal-stats">
+      <span id="goalText">0 of 10 contacted today</span>
+      <span id="goalPct">0%</span>
+    </div>
+  </div>
 
   <div class="kpi-grid" id="kpiGrid"></div>
 
@@ -199,10 +227,10 @@
 </div>
 
 <script>
-// REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
-const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/19Q9Ll1tJSU7VjxM_23__uvfbHmMHXlJaYq5Qmfqjzkg/edit?gid=0#gid=0';
+// YOUR GOOGLE APPS SCRIPT WEB APP URL
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyCAL60bQVDv6CVcPvPr1WHzo4l4cial_kt9gn-zozTntPcpfBWy_e_BdWzu8D2aO65/exec';
 
-const PLATFORMS = [https://script.google.com/macros/s/AKfycbx8WFIGNrLwReSQTTQAGwUIzUQF5tQCJjoTCuaUIzoY4gUHTeJ46EqOL_KEcxF9z3rS/exec
+const PLATFORMS = [
   { key:'Instagram', color:'var(--ig)' },
   { key:'Email', color:'var(--email)' },
   { key:'WhatsApp', color:'var(--whatsapp)' },
@@ -210,7 +238,6 @@ const PLATFORMS = [https://script.google.com/macros/s/AKfycbx8WFIGNrLwReSQTTQAGw
   { key:'Other', color:'var(--other)' },
 ];
 const STAGE_ORDER = ['New','Contacted','Replied','Follow-up Sent','Follow-up Reply','Booked','Closed Won'];
-const STAGE_COLORS = { 'Closed Lost':'var(--danger)' };
 const STATUS_ALL = [...STAGE_ORDER, 'Closed Lost'];
 const STATUS_COLOR = (s) => {
   if(s==='Closed Won') return { bg:'rgba(49,214,190,0.15)', fg:'var(--mint)' };
@@ -221,6 +248,7 @@ const STATUS_COLOR = (s) => {
 };
 
 let prospects = [];
+let dailyGoal = 10;
 let sortKey = 'date', sortDir = -1;
 let currentMonth = new Date().toISOString().slice(0,7);
 
@@ -231,32 +259,45 @@ async function loadData(){
   try{
     const res = await window.storage.get('atlas-prospects', false);
     if(res && res.value) prospects = JSON.parse(res.value);
+    const goalRes = await window.storage.get('atlas-goal', false);
+    if(goalRes && goalRes.value) {
+        dailyGoal = parseInt(goalRes.value, 10);
+        document.getElementById('goalTarget').value = dailyGoal;
+    }
   }catch(e){ prospects = []; }
 }
 async function saveData(){
-  try{ await window.storage.set('atlas-prospects', JSON.stringify(prospects), false); }
+  try{ 
+    await window.storage.set('atlas-prospects', JSON.stringify(prospects), false);
+    await window.storage.set('atlas-goal', dailyGoal.toString(), false);
+  }
   catch(e){ console.error('save failed', e); }
 }
 
-// FUNCTION TO SEND DATA TO GOOGLE SHEETS
 async function sendToGoogleSheets(data) {
   if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return;
-  
   const params = new URLSearchParams();
-  for (const key in data) {
-    params.append(key, data[key]);
-  }
-
+  for (const key in data) params.append(key, data[key]);
   try {
     await fetch(GOOGLE_SHEET_URL, {
       method: 'POST',
-      mode: 'no-cors', // This is required for Google Apps Script Web Apps
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString()
     });
-  } catch (e) {
-    console.error('Google Sheets sync failed', e);
-  }
+  } catch (e) { console.error('Google Sheets sync failed', e); }
+}
+
+function renderGoal(){
+  const todayCount = prospects.filter(p => p.date === todayStr()).length;
+  const pct = Math.min(Math.round((todayCount / dailyGoal) * 100), 100);
+  const bar = document.getElementById('goalBarFill');
+  bar.style.width = pct + '%';
+  if(todayCount >= dailyGoal) bar.classList.add('complete');
+  else bar.classList.remove('complete');
+  
+  document.getElementById('goalText').textContent = `${todayCount} of ${dailyGoal} contacted today`;
+  document.getElementById('goalPct').textContent = pct + '%';
 }
 
 function animateValue(el, to){
@@ -310,7 +351,7 @@ function renderKPIs(){
   }
   const max = Math.max(...days, 1);
   const w = 280, h = 40;
-  const pts = days.map((v,i) => `${(i/(days.length-1))*w},${h - (v/max)*h}`).join(' ');
+  const pts = days.map((v,i) => `${(i/13)*w},${h - (v/max)*h}`).join(' ');
 
   const cards = [
     { lbl:'Today', val: today },
@@ -477,6 +518,7 @@ function renderTable(){
 }
 
 function renderAll(){
+  renderGoal();
   renderKPIs();
   renderFunnel();
   renderChannels();
@@ -505,6 +547,13 @@ async function init(){
   document.getElementById('searchBox').addEventListener('input', renderTable);
   document.getElementById('filterStatus').addEventListener('change', renderTable);
   document.getElementById('filterPlatform').addEventListener('change', renderTable);
+  
+  document.getElementById('goalTarget').addEventListener('change', async (e) => {
+    dailyGoal = parseInt(e.target.value, 10) || 10;
+    await saveData();
+    renderGoal();
+  });
+
   document.querySelectorAll('thead th[data-key]').forEach(th => {
     th.addEventListener('click', () => {
       const key = th.dataset.key;
