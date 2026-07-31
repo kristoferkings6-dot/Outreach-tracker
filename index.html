@@ -35,59 +35,53 @@
     backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
     box-shadow:0 12px 32px rgba(0,0,0,0.35);
   }
+  .banner{ background:rgba(240,174,78,0.1); border:1px solid rgba(240,174,78,0.3); color:var(--gold); font-size:12px; padding:10px 14px; border-radius:10px; margin-bottom:18px; display:none; }
+  .banner.show{ display:block; }
 
-  /* header */
   header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:22px; }
   .brand{ display:flex; align-items:center; gap:12px; }
   .brand .mark{ width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,var(--primary),var(--mint)); flex-shrink:0; }
   .brand h1{ font-size:21px; font-weight:700; margin:0; letter-spacing:-0.01em; }
   .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; }
-  .chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .chips{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
   .chip{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
   .chip .v{ color:var(--text); font-weight:600; font-family:'IBM Plex Mono',monospace; font-size:14px; }
   .chip .dot{ width:8px; height:8px; border-radius:50%; }
+  .icon-btn{ background:rgba(255,255,255,0.06); border:1px solid var(--glass-bd); color:var(--text-muted); border-radius:8px; padding:9px 12px; font-size:12px; cursor:pointer; }
+  .icon-btn:hover{ color:var(--text); background:rgba(255,255,255,0.1); }
 
-  /* Daily Goal Section */
   .goal-section{ margin-bottom:22px; padding:18px 20px; }
   .goal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
   .goal-title{ font-size:13px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
   .goal-controls{ display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-muted); }
   .goal-input{ width:50px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text); border-radius:6px; padding:4px 8px; text-align:center; font-family:'IBM Plex Mono',monospace; }
-  .goal-bar-wrap{ height:12px; background:rgba(255,255,255,0.04); border-radius:6px; overflow:hidden; position:relative; }
+  .goal-bar-wrap{ height:12px; background:rgba(255,255,255,0.04); border-radius:6px; overflow:hidden; }
   .goal-bar-fill{ height:100%; width:0%; transition:width 0.5s ease, background 0.3s ease; background:var(--primary); }
   .goal-bar-fill.complete{ background:var(--mint); box-shadow:0 0 15px rgba(49,214,190,0.3); }
   .goal-stats{ display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text-dim); }
 
-  /* KPI grid */
   .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
   @media (max-width:900px){ .kpi-grid{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:520px){ .kpi-grid{ grid-template-columns:1fr; } }
   .kpi{ padding:16px 18px; position:relative; }
   .kpi .lbl{ font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--text-muted); margin-bottom:8px; }
-  .kpi .val{ font-size:28px; font-weight:600; font-family:'IBM Plex Mono',monospace; }
-  .kpi .delta{ font-size:11px; margin-top:6px; display:inline-flex; align-items:center; gap:4px; }
-  .kpi .delta.up{ color:var(--mint); }
-  .kpi .delta.down{ color:var(--danger); }
-  .kpi .delta.flat{ color:var(--text-dim); }
+  .kpi .val{ font-size:26px; font-weight:600; font-family:'IBM Plex Mono',monospace; }
   .kpi.spark{ grid-column:span 2; }
   @media (max-width:520px){ .kpi.spark{ grid-column:span 1; } }
   .kpi.spark svg{ margin-top:10px; width:100%; height:44px; }
 
-  /* section titles */
   .sec-title{ font-size:14px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin:26px 2px 10px; }
 
-  /* funnel */
   .funnel{ padding:20px 22px; margin-bottom:22px; }
   .fstage{ display:flex; align-items:center; gap:16px; margin-bottom:12px; }
   .fstage:last-child{ margin-bottom:0; }
-  .flabel{ width:120px; font-size:13px; color:var(--text-muted); flex-shrink:0; }
+  .flabel{ width:140px; font-size:13px; color:var(--text-muted); flex-shrink:0; }
   .fbar-wrap{ flex:1; height:28px; border-radius:6px; background:rgba(255,255,255,0.04); overflow:hidden; }
   .fbar{ height:100%; border-radius:6px; transition:width .5s cubic-bezier(.2,.8,.2,1); background:linear-gradient(90deg,var(--primary),var(--mint)); }
   .fcount{ width:150px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:13px; flex-shrink:0; }
   .fcount .n{ font-weight:600; }
   .fcount .pct{ color:var(--text-muted); margin-left:6px; }
 
-  /* channel cards */
   .channels{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:22px; }
   @media (max-width:960px){ .channels{ grid-template-columns:repeat(3,1fr); } }
   @media (max-width:600px){ .channels{ grid-template-columns:repeat(2,1fr); } }
@@ -96,7 +90,6 @@
   .ch-card .row{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); padding:3px 0; }
   .ch-card .row b{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-weight:500; }
 
-  /* monthly */
   .monthly-block{ padding:18px 22px; margin-bottom:22px; }
   .monthly-block-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
   .picker{ background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text); border-radius:8px; padding:7px 12px; font-family:'IBM Plex Mono',monospace; font-size:13px; }
@@ -107,7 +100,6 @@
   .mbar{ height:100%; border-radius:4px; transition:width .4s ease; }
   .mcount{ width:40px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:12px; }
 
-  /* prospect table */
   .table-panel{ padding:18px 20px; }
   .table-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
   .search-filter{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -115,17 +107,21 @@
     background:rgba(255,255,255,0.05); border:1px solid var(--glass-bd); color:var(--text);
     border-radius:8px; padding:8px 12px; font-size:13px; font-family:'Inter',sans-serif;
   }
-  .add-form{ display:grid; grid-template-columns:repeat(6,1fr) auto; gap:8px; margin-bottom:16px; }
-  @media (max-width:960px){ .add-form{ grid-template-columns:repeat(2,1fr); } }
+  .add-form{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:10px; }
+  .add-form-row2{ display:grid; grid-template-columns:repeat(4,1fr) auto; gap:8px; margin-bottom:16px; align-items:center; }
+  @media (max-width:960px){ .add-form, .add-form-row2{ grid-template-columns:repeat(2,1fr); } }
+  .checkbox-field{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
   .btn{ background:linear-gradient(135deg,var(--primary),#8B7CFF); border:none; color:#fff; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:600; cursor:pointer; }
   .btn:hover{ filter:brightness(1.08); }
-  .btn.ghost{ background:rgba(255,255,255,0.06); color:var(--text); }
+  .btn.ghost{ background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--glass-bd); }
   table{ width:100%; border-collapse:collapse; font-size:13px; }
   thead th{ text-align:left; color:var(--text-muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 10px; border-bottom:1px solid var(--glass-bd); cursor:pointer; user-select:none; white-space:nowrap; }
   thead th:hover{ color:var(--text); }
   tbody td{ padding:9px 10px; border-bottom:1px solid rgba(255,255,255,0.05); font-family:'Inter',sans-serif; }
   tbody tr:hover{ background:rgba(255,255,255,0.025); }
-  .status-pill{ display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+  .status-pill{ display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .mini-flag{ display:inline-block; font-size:10px; padding:2px 6px; border-radius:10px; margin-right:4px; background:rgba(255,255,255,0.07); color:var(--text-muted); }
+  .mini-flag.on{ background:rgba(110,91,255,0.18); color:var(--primary); }
   .followup-overdue{ color:var(--danger); font-weight:600; }
   .followup-today{ color:var(--gold); font-weight:600; }
   .row-del{ background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:15px; }
@@ -138,6 +134,8 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="banner" id="storageBanner">Heads up: this browser session couldn't reach saved storage, so nothing will persist right now. Use "Backup" regularly, or open this dashboard from the same Claude chat/artifact each time rather than a re-downloaded copy.</div>
+
   <header>
     <div class="brand">
       <div class="mark"></div>
@@ -149,22 +147,22 @@
     <div class="chips">
       <div class="chip glass"><span class="dot" style="background:var(--gold)"></span>Streak <span class="v" id="streakVal">0</span></div>
       <div class="chip glass"><span class="dot" id="mostUsedDot"></span>Top medium <span class="v" id="mostUsedVal">–</span></div>
+      <button class="icon-btn" id="exportBtn">Backup (.json)</button>
+      <button class="icon-btn" id="importBtn">Restore</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
     </div>
   </header>
 
-  <!-- Daily Goal Feature -->
   <div class="goal-section glass">
     <div class="goal-header">
       <div class="goal-title">Daily Outreach Goal</div>
       <div class="goal-controls">
-        Target: <input type="number" id="goalTarget" class="goal-input" value="100" min="1">
+        Target: <input type="number" id="goalTarget" class="goal-input" value="10" min="1">
       </div>
     </div>
-    <div class="goal-bar-wrap">
-      <div id="goalBarFill" class="goal-bar-fill"></div>
-    </div>
+    <div class="goal-bar-wrap"><div id="goalBarFill" class="goal-bar-fill"></div></div>
     <div class="goal-stats">
-      <span id="goalText">0 of 100 contacted today</span>
+      <span id="goalText">0 of 10 contacted today</span>
       <span id="goalPct">0%</span>
     </div>
   </div>
@@ -193,8 +191,12 @@
       <input type="text" id="f-company" placeholder="Company">
       <select id="f-platform"></select>
       <select id="f-status"></select>
-      <input type="date" id="f-nextfollowup">
+    </div>
+    <div class="add-form-row2">
+      <input type="date" id="f-nextfollowup" title="Next follow-up">
       <input type="text" id="f-notes" placeholder="Notes">
+      <label class="checkbox-field"><input type="checkbox" id="f-roi"> ROI calculator sent</label>
+      <label class="checkbox-field"><input type="checkbox" id="f-audit"> Audit call booked</label>
       <button class="btn" id="addBtn">Add prospect</button>
     </div>
     <div class="table-head">
@@ -213,6 +215,7 @@
             <th data-key="company">Company</th>
             <th data-key="platform">Channel</th>
             <th data-key="status">Status</th>
+            <th>Flags</th>
             <th data-key="nextFollowUp">Next follow-up</th>
             <th data-key="notes">Notes</th>
             <th></th>
@@ -223,11 +226,12 @@
     </div>
   </div>
 
-  <footer>Data saves automatically to this dashboard. Built for a solo operator — no login, no team view.</footer>
+  <footer>Data saves automatically to this dashboard while it's open inside Claude. Use "Backup" to save a copy you can restore from if storage ever resets.</footer>
 </div>
 
 <script>
-// YOUR GOOGLE APPS SCRIPT WEB APP URL
+// Optional: paste a Google Apps Script Web App URL here to also push new prospects to a Sheet.
+// This is a best-effort, fire-and-forget sync — it does not replace the Backup/Restore buttons below.
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyuMgTZWk3v9vwgmQ3-rLMtRPikXEoVlYth0J0no_P8lUgldnHHKG-O5znGBwzVa1Ls/exec';
 
 const PLATFORMS = [
@@ -237,12 +241,13 @@ const PLATFORMS = [
   { key:'LinkedIn', color:'var(--linkedin)' },
   { key:'Other', color:'var(--other)' },
 ];
-const STAGE_ORDER = ['New','Contacted','Replied','Follow-up Sent','Follow-up Reply','Booked','Closed Won'];
+const STAGE_ORDER = ['New','Contacted','Replied','Follow-up Sent','Follow-up Reply','ROI Calculator Sent','Audit Call Booked','Closed Won'];
 const STATUS_ALL = [...STAGE_ORDER, 'Closed Lost'];
 const STATUS_COLOR = (s) => {
   if(s==='Closed Won') return { bg:'rgba(49,214,190,0.15)', fg:'var(--mint)' };
   if(s==='Closed Lost') return { bg:'rgba(238,106,95,0.15)', fg:'var(--danger)' };
-  if(s==='Booked') return { bg:'rgba(240,174,78,0.15)', fg:'var(--gold)' };
+  if(s==='Audit Call Booked') return { bg:'rgba(240,174,78,0.15)', fg:'var(--gold)' };
+  if(s==='ROI Calculator Sent') return { bg:'rgba(110,91,255,0.15)', fg:'var(--primary)' };
   if(STAGE_ORDER.indexOf(s) >= STAGE_ORDER.indexOf('Replied')) return { bg:'rgba(110,91,255,0.15)', fg:'var(--primary)' };
   return { bg:'rgba(255,255,255,0.07)', fg:'var(--text-muted)' };
 };
@@ -251,41 +256,85 @@ let prospects = [];
 let dailyGoal = 10;
 let sortKey = 'date', sortDir = -1;
 let currentMonth = new Date().toISOString().slice(0,7);
+let storageWorking = true;
 
 function uid(){ return 'p_' + Math.random().toString(36).slice(2,10); }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 
+// Migrates records saved by earlier versions of this dashboard (field-name / status-name drift)
+function normalizeProspect(p){
+  return {
+    id: p.id || uid(),
+    date: p.date || todayStr(),
+    name: p.name || '',
+    company: p.company || '',
+    platform: p.platform || 'Other',
+    status: p.status === 'Booked' ? 'Audit Call Booked' : (p.status || 'New'),
+    nextFollowUp: p.nextFollowUp || p.nextfollowup || '',
+    notes: p.notes || '',
+    roiCalculatorSent: !!p.roiCalculatorSent,
+    auditCallBooked: !!p.auditCallBooked || p.status === 'Audit Call Booked' || p.status === 'Booked',
+  };
+}
+
 async function loadData(){
   try{
     const res = await window.storage.get('atlas-prospects', false);
-    if(res && res.value) prospects = JSON.parse(res.value);
+    if(res && res.value) prospects = JSON.parse(res.value).map(normalizeProspect);
     const goalRes = await window.storage.get('atlas-goal', false);
-    if(goalRes && goalRes.value) {
-        dailyGoal = parseInt(goalRes.value, 10);
-        document.getElementById('goalTarget').value = dailyGoal;
+    if(goalRes && goalRes.value){
+      dailyGoal = parseInt(goalRes.value, 10) || 10;
+      document.getElementById('goalTarget').value = dailyGoal;
     }
-  }catch(e){ prospects = []; }
+  }catch(e){
+    // Key not found yet is normal for a first run — only warn if storage itself is unusable.
+    if(typeof window.storage === 'undefined'){
+      storageWorking = false;
+      document.getElementById('storageBanner').classList.add('show');
+    }
+  }
 }
 async function saveData(){
-  try{ 
+  try{
     await window.storage.set('atlas-prospects', JSON.stringify(prospects), false);
     await window.storage.set('atlas-goal', dailyGoal.toString(), false);
+  }catch(e){
+    storageWorking = false;
+    document.getElementById('storageBanner').classList.add('show');
   }
-  catch(e){ console.error('save failed', e); }
 }
 
-async function sendToGoogleSheets(data) {
-  if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return;
+async function sendToGoogleSheets(data){
+  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return;
   const params = new URLSearchParams();
-  for (const key in data) params.append(key, data[key]);
-  try {
-    await fetch(GOOGLE_SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    });
-  } catch (e) { console.error('Google Sheets sync failed', e); }
+  for(const key in data) params.append(key, data[key]);
+  try{
+    await fetch(GOOGLE_SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString() });
+  }catch(e){ console.error('Google Sheets sync failed', e); }
+}
+
+function exportBackup(){
+  const blob = new Blob([JSON.stringify({ prospects, dailyGoal }, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `kringstar-atlas-backup-${todayStr()}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+function importBackup(file){
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try{
+      const parsed = JSON.parse(e.target.result);
+      const incoming = (parsed.prospects || []).map(normalizeProspect);
+      prospects = incoming;
+      dailyGoal = parsed.dailyGoal || dailyGoal;
+      document.getElementById('goalTarget').value = dailyGoal;
+      await saveData();
+      renderAll();
+    }catch(err){ alert('Could not read that backup file.'); }
+  };
+  reader.readAsText(file);
 }
 
 function renderGoal(){
@@ -293,9 +342,7 @@ function renderGoal(){
   const pct = Math.min(Math.round((todayCount / dailyGoal) * 100), 100);
   const bar = document.getElementById('goalBarFill');
   bar.style.width = pct + '%';
-  if(todayCount >= dailyGoal) bar.classList.add('complete');
-  else bar.classList.remove('complete');
-  
+  bar.classList.toggle('complete', todayCount >= dailyGoal);
   document.getElementById('goalText').textContent = `${todayCount} of ${dailyGoal} contacted today`;
   document.getElementById('goalPct').textContent = pct + '%';
 }
@@ -339,7 +386,8 @@ function renderKPIs(){
   const stageIdx = s => STAGE_ORDER.indexOf(s);
   const replied = prospects.filter(p => stageIdx(p.status) >= stageIdx('Replied')).length;
   const followUps = prospects.filter(p => stageIdx(p.status) >= stageIdx('Follow-up Sent')).length;
-  const booked = prospects.filter(p => stageIdx(p.status) >= stageIdx('Booked')).length;
+  const roiSent = prospects.filter(p => p.roiCalculatorSent).length;
+  const auditBooked = prospects.filter(p => p.auditCallBooked).length;
   const closed = prospects.filter(p => p.status === 'Closed Won').length;
   const replyRate = total ? Math.round((replied/total)*100) : 0;
 
@@ -361,7 +409,8 @@ function renderKPIs(){
     { lbl:'Replies', val: replied },
     { lbl:'Reply rate', val: replyRate, suffix:'%' },
     { lbl:'Follow-ups sent', val: followUps },
-    { lbl:'Booked', val: booked },
+    { lbl:'ROI calculators sent', val: roiSent },
+    { lbl:'Audit calls booked', val: auditBooked },
     { lbl:'Closed won', val: closed },
   ];
   grid.innerHTML = cards.map((c,i) => `
@@ -377,10 +426,7 @@ function renderKPIs(){
       </svg>
     </div>
   `;
-  cards.forEach((c,i) => {
-    const el = grid.querySelector(`[data-i="${i}"]`);
-    animateValue(el, c.val);
-  });
+  cards.forEach((c,i) => animateValue(grid.querySelector(`[data-i="${i}"]`), c.val));
 }
 
 function renderFunnel(){
@@ -412,14 +458,14 @@ function renderChannels(){
     const rows = prospects.filter(p => p.platform === pl.key);
     const sent = rows.length;
     const replied = rows.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf('Replied')).length;
-    const booked = rows.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf('Booked')).length;
-    const conv = sent ? Math.round((booked/sent)*100) : 0;
+    const auditBooked = rows.filter(p => p.auditCallBooked).length;
+    const conv = sent ? Math.round((auditBooked/sent)*100) : 0;
     return `
       <div class="ch-card glass" style="border-top-color:${pl.color}">
         <h4><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</h4>
         <div class="row"><span>Sent</span><b>${sent}</b></div>
         <div class="row"><span>Replied</span><b>${replied}</b></div>
-        <div class="row"><span>Booked</span><b>${booked}</b></div>
+        <div class="row"><span>Audit booked</span><b>${auditBooked}</b></div>
         <div class="row"><span>Conversion</span><b>${conv}%</b></div>
       </div>
     `;
@@ -482,7 +528,7 @@ function renderTable(){
   const tbody = document.getElementById('tbody');
   const rows = filteredSortedRows();
   if(rows.length === 0){
-    tbody.innerHTML = `<tr><td colspan="8" class="empty">No prospects yet — add one above to start tracking.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No prospects yet — add one above to start tracking.</td></tr>`;
     return;
   }
   const now = todayStr();
@@ -502,6 +548,10 @@ function renderTable(){
         <td>${p.company}</td>
         <td><span class="ch-dot" style="background:${pl.color}"></span> ${p.platform}</td>
         <td><span class="status-pill" style="background:${sc.bg};color:${sc.fg}">${p.status}</span></td>
+        <td>
+          <span class="mini-flag ${p.roiCalculatorSent?'on':''}">ROI</span>
+          <span class="mini-flag ${p.auditCallBooked?'on':''}">Audit</span>
+        </td>
         <td class="mono ${nfClass}">${nf || '—'}</td>
         <td>${p.notes || ''}</td>
         <td><button class="row-del" data-del="${p.id}">✕</button></td>
@@ -547,11 +597,17 @@ async function init(){
   document.getElementById('searchBox').addEventListener('input', renderTable);
   document.getElementById('filterStatus').addEventListener('change', renderTable);
   document.getElementById('filterPlatform').addEventListener('change', renderTable);
-  
+
   document.getElementById('goalTarget').addEventListener('change', async (e) => {
     dailyGoal = parseInt(e.target.value, 10) || 10;
     await saveData();
     renderGoal();
+  });
+
+  document.getElementById('exportBtn').addEventListener('click', exportBackup);
+  document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
+  document.getElementById('importFile').addEventListener('change', (e) => {
+    if(e.target.files[0]) importBackup(e.target.files[0]);
   });
 
   document.querySelectorAll('thead th[data-key]').forEach(th => {
@@ -561,34 +617,34 @@ async function init(){
       renderTable();
     });
   });
+
   document.getElementById('addBtn').addEventListener('click', async () => {
     const name = document.getElementById('f-name').value.trim();
     const company = document.getElementById('f-company').value.trim();
     if(!name){ alert('Enter a prospect name first.'); return; }
-    
-    const newProspect = {
+    const newProspect = normalizeProspect({
       id: uid(),
       date: todayStr(),
       name, company,
       platform: document.getElementById('f-platform').value,
       status: document.getElementById('f-status').value,
-      nextfollowup: document.getElementById('f-nextfollowup').value,
+      nextFollowUp: document.getElementById('f-nextfollowup').value,
       notes: document.getElementById('f-notes').value.trim(),
-    };
-    
+      roiCalculatorSent: document.getElementById('f-roi').checked,
+      auditCallBooked: document.getElementById('f-audit').checked,
+    });
     prospects.push(newProspect);
-    
     document.getElementById('f-name').value = '';
     document.getElementById('f-company').value = '';
     document.getElementById('f-nextfollowup').value = '';
     document.getElementById('f-notes').value = '';
-    
+    document.getElementById('f-roi').checked = false;
+    document.getElementById('f-audit').checked = false;
     await saveData();
     renderAll();
-    
-    // SYNC TO GOOGLE SHEETS
     sendToGoogleSheets(newProspect);
   });
+
   renderAll();
 }
 init();
