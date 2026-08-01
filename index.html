@@ -9,40 +9,35 @@
   :root{
     --bg-0:#0A0B10; --bg-1:#12131B;
     --glass:rgba(255,255,255,0.045); --glass-bd:rgba(255,255,255,0.09);
-    --glass-hi:rgba(255,255,255,0.07);
     --text:#F2F1EE; --text-muted:#8D8FA0; --text-dim:#5C5E6E;
-    --primary:#6E5BFF; --primary-soft:rgba(110,91,255,0.16);
-    --mint:#31D6BE; --gold:#F0AE4E; --danger:#EE6A5F;
+    --primary:#6E5BFF; --mint:#31D6BE; --gold:#F0AE4E; --danger:#EE6A5F;
     --ig:#E85D9E; --email:#4F8CFF; --whatsapp:#34C77B; --linkedin:#4E86B4; --other:#9497A6;
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   body{
-    background:
-      radial-gradient(1100px 500px at 15% -10%, rgba(110,91,255,0.16), transparent 60%),
-      radial-gradient(900px 500px at 100% 0%, rgba(49,214,190,0.10), transparent 55%),
-      var(--bg-0);
-    color:var(--text);
-    font-family:'Inter',system-ui,sans-serif;
-    padding:26px 22px 70px;
-    -webkit-font-smoothing:antialiased;
+    background: radial-gradient(1100px 500px at 15% -10%, rgba(110,91,255,0.16), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(49,214,190,0.10), transparent 55%), var(--bg-0);
+    color:var(--text); font-family:'Inter',system-ui,sans-serif; padding:26px 22px 70px; -webkit-font-smoothing:antialiased;
   }
   .wrap{ max-width:1180px; margin:0 auto; }
   .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; }
   .display{ font-family:'Space Grotesk',sans-serif; }
-  .glass{
-    background:var(--glass); border:1px solid var(--glass-bd); border-radius:16px;
-    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-    box-shadow:0 12px 32px rgba(0,0,0,0.35);
-  }
-  .banner{ background:rgba(240,174,78,0.1); border:1px solid rgba(240,174,78,0.3); color:var(--gold); font-size:12px; padding:10px 14px; border-radius:10px; margin-bottom:18px; display:none; }
+  .glass{ background:var(--glass); border:1px solid var(--glass-bd); border-radius:16px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:0 12px 32px rgba(0,0,0,0.35); }
+  .banner{ font-size:12px; padding:10px 14px; border-radius:10px; margin-bottom:18px; display:none; }
   .banner.show{ display:block; }
+  .banner.warn{ background:rgba(240,174,78,0.1); border:1px solid rgba(240,174,78,0.3); color:var(--gold); }
+  .banner.err{ background:rgba(238,106,95,0.1); border:1px solid rgba(238,106,95,0.3); color:var(--danger); }
+  .banner.ok{ background:rgba(49,214,190,0.1); border:1px solid rgba(49,214,190,0.3); color:var(--mint); }
 
   header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:22px; }
   .brand{ display:flex; align-items:center; gap:12px; }
   .brand .mark{ width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,var(--primary),var(--mint)); flex-shrink:0; }
   .brand h1{ font-size:21px; font-weight:700; margin:0; letter-spacing:-0.01em; }
-  .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; }
+  .brand .sub{ font-size:12px; color:var(--text-muted); margin-top:1px; display:flex; align-items:center; gap:6px; }
+  .sync-dot{ width:7px; height:7px; border-radius:50%; background:var(--text-dim); }
+  .sync-dot.live{ background:var(--mint); }
+  .sync-dot.bad{ background:var(--danger); }
   .chips{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
   .chip{ padding:9px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
   .chip .v{ color:var(--text); font-weight:600; font-family:'IBM Plex Mono',monospace; font-size:14px; }
@@ -63,7 +58,7 @@
   .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
   @media (max-width:900px){ .kpi-grid{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:520px){ .kpi-grid{ grid-template-columns:1fr; } }
-  .kpi{ padding:16px 18px; position:relative; }
+  .kpi{ padding:16px 18px; }
   .kpi .lbl{ font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--text-muted); margin-bottom:8px; }
   .kpi .val{ font-size:26px; font-weight:600; font-family:'IBM Plex Mono',monospace; }
   .kpi.spark{ grid-column:span 2; }
@@ -113,7 +108,7 @@
   .checkbox-field{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
   .btn{ background:linear-gradient(135deg,var(--primary),#8B7CFF); border:none; color:#fff; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:600; cursor:pointer; }
   .btn:hover{ filter:brightness(1.08); }
-  .btn.ghost{ background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--glass-bd); }
+  .btn:disabled{ opacity:0.5; cursor:default; }
   table{ width:100%; border-collapse:collapse; font-size:13px; }
   thead th{ text-align:left; color:var(--text-muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 10px; border-bottom:1px solid var(--glass-bd); cursor:pointer; user-select:none; white-space:nowrap; }
   thead th:hover{ color:var(--text); }
@@ -134,37 +129,32 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="banner" id="storageBanner">Heads up: this browser session couldn't reach saved storage, so nothing will persist right now. Use "Backup" regularly, or open this dashboard from the same Claude chat/artifact each time rather than a re-downloaded copy.</div>
+  <div class="banner warn" id="notConfiguredBanner">Set your Apps Script URL in the code (search for GOOGLE_SHEET_URL) before this will load or save anything.</div>
+  <div class="banner err" id="errorBanner"></div>
+  <div class="banner ok" id="okBanner">Connected to your Google Sheet.</div>
 
   <header>
     <div class="brand">
       <div class="mark"></div>
       <div>
         <h1 class="display">Kringstar Atlas</h1>
-        <div class="sub">Outreach Tracker</div>
+        <div class="sub"><span class="sync-dot" id="syncDot"></span><span id="syncLabel">Connecting…</span></div>
       </div>
     </div>
     <div class="chips">
       <div class="chip glass"><span class="dot" style="background:var(--gold)"></span>Streak <span class="v" id="streakVal">0</span></div>
       <div class="chip glass"><span class="dot" id="mostUsedDot"></span>Top medium <span class="v" id="mostUsedVal">–</span></div>
-      <button class="icon-btn" id="exportBtn">Backup (.json)</button>
-      <button class="icon-btn" id="importBtn">Restore</button>
-      <input type="file" id="importFile" accept="application/json" style="display:none">
+      <button class="icon-btn" id="refreshBtn">Refresh from Sheet</button>
     </div>
   </header>
 
   <div class="goal-section glass">
     <div class="goal-header">
       <div class="goal-title">Daily Outreach Goal</div>
-      <div class="goal-controls">
-        Target: <input type="number" id="goalTarget" class="goal-input" value="10" min="1">
-      </div>
+      <div class="goal-controls">Target: <input type="number" id="goalTarget" class="goal-input" value="10" min="1"></div>
     </div>
     <div class="goal-bar-wrap"><div id="goalBarFill" class="goal-bar-fill"></div></div>
-    <div class="goal-stats">
-      <span id="goalText">0 of 10 contacted today</span>
-      <span id="goalPct">0%</span>
-    </div>
+    <div class="goal-stats"><span id="goalText">0 of 10 contacted today</span><span id="goalPct">0%</span></div>
   </div>
 
   <div class="kpi-grid" id="kpiGrid"></div>
@@ -226,13 +216,12 @@
     </div>
   </div>
 
-  <footer>Data saves automatically to this dashboard while it's open inside Claude. Use "Backup" to save a copy you can restore from if storage ever resets.</footer>
+  <footer>Data lives in your Google Sheet — this dashboard reads and writes it directly, nothing is stored on Claude.</footer>
 </div>
 
 <script>
-// Optional: paste a Google Apps Script Web App URL here to also push new prospects to a Sheet.
-// This is a best-effort, fire-and-forget sync — it does not replace the Backup/Restore buttons below.
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyuMgTZWk3v9vwgmQ3-rLMtRPikXEoVlYth0J0no_P8lUgldnHHKG-O5znGBwzVa1Ls/exec';
+// Paste the Web App URL from your Apps Script deployment here.
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyiR-YWW4bH3NASdI3khfJ2ReFhi3WDabSn_jGjyB-QAe5IYRCFx3c7cnIZwfVNg1Ij/exec';
 
 const PLATFORMS = [
   { key:'Instagram', color:'var(--ig)' },
@@ -256,12 +245,11 @@ let prospects = [];
 let dailyGoal = 10;
 let sortKey = 'date', sortDir = -1;
 let currentMonth = new Date().toISOString().slice(0,7);
-let storageWorking = true;
 
 function uid(){ return 'p_' + Math.random().toString(36).slice(2,10); }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
+function truthy(v){ return v === true || v === 'true' || v === 'TRUE' || v === 1 || v === '1'; }
 
-// Migrates records saved by earlier versions of this dashboard (field-name / status-name drift)
 function normalizeProspect(p){
   return {
     id: p.id || uid(),
@@ -272,69 +260,60 @@ function normalizeProspect(p){
     status: p.status === 'Booked' ? 'Audit Call Booked' : (p.status || 'New'),
     nextFollowUp: p.nextFollowUp || p.nextfollowup || '',
     notes: p.notes || '',
-    roiCalculatorSent: !!p.roiCalculatorSent,
-    auditCallBooked: !!p.auditCallBooked || p.status === 'Audit Call Booked' || p.status === 'Booked',
+    roiCalculatorSent: truthy(p.roiCalculatorSent),
+    auditCallBooked: truthy(p.auditCallBooked) || p.status === 'Audit Call Booked' || p.status === 'Booked',
   };
 }
 
-async function loadData(){
-  try{
-    const res = await window.storage.get('atlas-prospects', false);
-    if(res && res.value) prospects = JSON.parse(res.value).map(normalizeProspect);
-    const goalRes = await window.storage.get('atlas-goal', false);
-    if(goalRes && goalRes.value){
-      dailyGoal = parseInt(goalRes.value, 10) || 10;
-      document.getElementById('goalTarget').value = dailyGoal;
-    }
-  }catch(e){
-    // Key not found yet is normal for a first run — only warn if storage itself is unusable.
-    if(typeof window.storage === 'undefined'){
-      storageWorking = false;
-      document.getElementById('storageBanner').classList.add('show');
-    }
-  }
+function setSync(state, msg){
+  const dot = document.getElementById('syncDot');
+  const label = document.getElementById('syncLabel');
+  dot.className = 'sync-dot' + (state === 'live' ? ' live' : state === 'bad' ? ' bad' : '');
+  label.textContent = msg;
 }
-async function saveData(){
+
+function showBanner(id, msg){
+  const el = document.getElementById(id);
+  if(msg !== undefined) el.textContent = msg;
+  el.classList.add('show');
+}
+function hideBanner(id){ document.getElementById(id).classList.remove('show'); }
+
+async function loadFromSheet(){
+  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')){
+    showBanner('notConfiguredBanner');
+    setSync('bad', 'Not configured');
+    return;
+  }
+  setSync(null, 'Loading from Sheet…');
   try{
-    await window.storage.set('atlas-prospects', JSON.stringify(prospects), false);
-    await window.storage.set('atlas-goal', dailyGoal.toString(), false);
+    const res = await fetch(GOOGLE_SHEET_URL, { method:'GET' });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = await res.json();
+    prospects = rows.map(normalizeProspect);
+    setSync('live', 'Synced with Google Sheet');
+    showBanner('okBanner');
+    setTimeout(() => hideBanner('okBanner'), 2500);
   }catch(e){
-    storageWorking = false;
-    document.getElementById('storageBanner').classList.add('show');
+    setSync('bad', 'Could not reach Sheet');
+    showBanner('errorBanner', `Couldn't load from your Google Sheet (${e.message}). This dashboard runs in a sandboxed environment — if this keeps failing, test your Apps Script URL directly in a browser tab to confirm it's deployed and returns JSON.`);
   }
 }
 
-async function sendToGoogleSheets(data){
-  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return;
-  const params = new URLSearchParams();
-  for(const key in data) params.append(key, data[key]);
+async function postToSheet(params){
+  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR')) return false;
   try{
-    await fetch(GOOGLE_SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString() });
-  }catch(e){ console.error('Google Sheets sync failed', e); }
-}
-
-function exportBackup(){
-  const blob = new Blob([JSON.stringify({ prospects, dailyGoal }, null, 2)], { type:'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `kringstar-atlas-backup-${todayStr()}.json`;
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
-}
-function importBackup(file){
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    try{
-      const parsed = JSON.parse(e.target.result);
-      const incoming = (parsed.prospects || []).map(normalizeProspect);
-      prospects = incoming;
-      dailyGoal = parsed.dailyGoal || dailyGoal;
-      document.getElementById('goalTarget').value = dailyGoal;
-      await saveData();
-      renderAll();
-    }catch(err){ alert('Could not read that backup file.'); }
-  };
-  reader.readAsText(file);
+    await fetch(GOOGLE_SHEET_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(params).toString()
+    });
+    // no-cors means we can't read the response — treat as sent, not confirmed.
+    return true;
+  }catch(e){
+    showBanner('errorBanner', `Couldn't write to your Google Sheet (${e.message}).`);
+    return false;
+  }
 }
 
 function renderGoal(){
@@ -402,30 +381,17 @@ function renderKPIs(){
   const pts = days.map((v,i) => `${(i/13)*w},${h - (v/max)*h}`).join(' ');
 
   const cards = [
-    { lbl:'Today', val: today },
-    { lbl:'This week', val: week },
-    { lbl:'This month', val: month },
-    { lbl:'Total contacted', val: total },
-    { lbl:'Replies', val: replied },
-    { lbl:'Reply rate', val: replyRate, suffix:'%' },
-    { lbl:'Follow-ups sent', val: followUps },
-    { lbl:'ROI calculators sent', val: roiSent },
-    { lbl:'Audit calls booked', val: auditBooked },
-    { lbl:'Closed won', val: closed },
+    { lbl:'Today', val: today }, { lbl:'This week', val: week }, { lbl:'This month', val: month },
+    { lbl:'Total contacted', val: total }, { lbl:'Replies', val: replied }, { lbl:'Reply rate', val: replyRate, suffix:'%' },
+    { lbl:'Follow-ups sent', val: followUps }, { lbl:'ROI calculators sent', val: roiSent },
+    { lbl:'Audit calls booked', val: auditBooked }, { lbl:'Closed won', val: closed },
   ];
   grid.innerHTML = cards.map((c,i) => `
-    <div class="kpi glass">
-      <div class="lbl">${c.lbl}</div>
-      <div class="val mono"><span class="cval" data-i="${i}">0</span>${c.suffix||''}</div>
-    </div>
+    <div class="kpi glass"><div class="lbl">${c.lbl}</div><div class="val mono"><span class="cval" data-i="${i}">0</span>${c.suffix||''}</div></div>
   `).join('') + `
-    <div class="kpi glass spark">
-      <div class="lbl">14-day contact trend</div>
-      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-        <polyline points="${pts}" fill="none" stroke="var(--mint)" stroke-width="2"/>
-      </svg>
-    </div>
-  `;
+    <div class="kpi glass spark"><div class="lbl">14-day contact trend</div>
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="var(--mint)" stroke-width="2"/></svg>
+    </div>`;
   cards.forEach((c,i) => animateValue(grid.querySelector(`[data-i="${i}"]`), c.val));
 }
 
@@ -442,13 +408,7 @@ function renderFunnel(){
       const p = prev>0 ? Math.round((count/prev)*100) : 0;
       pct = `<span class="pct">${p}% of ${STAGE_ORDER[i-1].toLowerCase()}</span>`;
     }
-    return `
-      <div class="fstage">
-        <div class="flabel">${stage}</div>
-        <div class="fbar-wrap"><div class="fbar" style="width:${width}%"></div></div>
-        <div class="fcount mono"><span class="n">${count}</span>${pct}</div>
-      </div>
-    `;
+    return `<div class="fstage"><div class="flabel">${stage}</div><div class="fbar-wrap"><div class="fbar" style="width:${width}%"></div></div><div class="fcount mono"><span class="n">${count}</span>${pct}</div></div>`;
   }).join('');
 }
 
@@ -460,15 +420,9 @@ function renderChannels(){
     const replied = rows.filter(p => STAGE_ORDER.indexOf(p.status) >= STAGE_ORDER.indexOf('Replied')).length;
     const auditBooked = rows.filter(p => p.auditCallBooked).length;
     const conv = sent ? Math.round((auditBooked/sent)*100) : 0;
-    return `
-      <div class="ch-card glass" style="border-top-color:${pl.color}">
-        <h4><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</h4>
-        <div class="row"><span>Sent</span><b>${sent}</b></div>
-        <div class="row"><span>Replied</span><b>${replied}</b></div>
-        <div class="row"><span>Audit booked</span><b>${auditBooked}</b></div>
-        <div class="row"><span>Conversion</span><b>${conv}%</b></div>
-      </div>
-    `;
+    return `<div class="ch-card glass" style="border-top-color:${pl.color}"><h4><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</h4>
+      <div class="row"><span>Sent</span><b>${sent}</b></div><div class="row"><span>Replied</span><b>${replied}</b></div>
+      <div class="row"><span>Audit booked</span><b>${auditBooked}</b></div><div class="row"><span>Conversion</span><b>${conv}%</b></div></div>`;
   }).join('');
 }
 
@@ -481,13 +435,8 @@ function renderMonthly(){
   wrap.innerHTML = PLATFORMS.map(pl => {
     const count = totals[pl.key] || 0;
     const width = Math.max((count/max)*100, count>0?3:0);
-    return `
-      <div class="mrow">
-        <div class="mlabel"><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</div>
-        <div class="mbar-wrap"><div class="mbar" style="width:${width}%; background:${pl.color}"></div></div>
-        <div class="mcount mono">${count}</div>
-      </div>
-    `;
+    return `<div class="mrow"><div class="mlabel"><span class="ch-dot" style="background:${pl.color}"></span>${pl.key}</div>
+      <div class="mbar-wrap"><div class="mbar" style="width:${width}%; background:${pl.color}"></div></div><div class="mcount mono">${count}</div></div>`;
   }).join('');
 }
 
@@ -528,7 +477,7 @@ function renderTable(){
   const tbody = document.getElementById('tbody');
   const rows = filteredSortedRows();
   if(rows.length === 0){
-    tbody.innerHTML = `<tr><td colspan="9" class="empty">No prospects yet — add one above to start tracking.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No prospects yet — add one above, or check the sync status if you expect existing rows.</td></tr>`;
     return;
   }
   const now = todayStr();
@@ -537,52 +486,33 @@ function renderTable(){
     const sc = STATUS_COLOR(p.status);
     let nf = p.nextFollowUp || '';
     let nfClass = '';
-    if(nf){
-      if(nf < now) nfClass = 'followup-overdue';
-      else if(nf === now) nfClass = 'followup-today';
-    }
-    return `
-      <tr data-id="${p.id}">
-        <td class="mono">${p.date}</td>
-        <td>${p.name}</td>
-        <td>${p.company}</td>
+    if(nf){ if(nf < now) nfClass = 'followup-overdue'; else if(nf === now) nfClass = 'followup-today'; }
+    return `<tr data-id="${p.id}">
+        <td class="mono">${p.date}</td><td>${p.name}</td><td>${p.company}</td>
         <td><span class="ch-dot" style="background:${pl.color}"></span> ${p.platform}</td>
         <td><span class="status-pill" style="background:${sc.bg};color:${sc.fg}">${p.status}</span></td>
-        <td>
-          <span class="mini-flag ${p.roiCalculatorSent?'on':''}">ROI</span>
-          <span class="mini-flag ${p.auditCallBooked?'on':''}">Audit</span>
-        </td>
-        <td class="mono ${nfClass}">${nf || '—'}</td>
-        <td>${p.notes || ''}</td>
+        <td><span class="mini-flag ${p.roiCalculatorSent?'on':''}">ROI</span><span class="mini-flag ${p.auditCallBooked?'on':''}">Audit</span></td>
+        <td class="mono ${nfClass}">${nf || '—'}</td><td>${p.notes || ''}</td>
         <td><button class="row-del" data-del="${p.id}">✕</button></td>
-      </tr>
-    `;
+      </tr>`;
   }).join('');
   tbody.querySelectorAll('[data-del]').forEach(btn => {
     btn.addEventListener('click', async () => {
-      prospects = prospects.filter(p => p.id !== btn.dataset.del);
-      await saveData();
+      const id = btn.dataset.del;
+      prospects = prospects.filter(p => p.id !== id);
       renderAll();
+      await postToSheet({ action:'delete', id });
     });
   });
 }
 
 function renderAll(){
-  renderGoal();
-  renderKPIs();
-  renderFunnel();
-  renderChannels();
-  renderMonthly();
-  renderMostUsed();
-  renderStreak();
-  renderTable();
+  renderGoal(); renderKPIs(); renderFunnel(); renderChannels(); renderMonthly(); renderMostUsed(); renderStreak(); renderTable();
 }
 
 function populateSelects(){
-  const fPlatform = document.getElementById('f-platform');
-  fPlatform.innerHTML = PLATFORMS.map(pl => `<option value="${pl.key}">${pl.key}</option>`).join('');
-  const fStatus = document.getElementById('f-status');
-  fStatus.innerHTML = STATUS_ALL.map(s => `<option value="${s}">${s}</option>`).join('');
+  document.getElementById('f-platform').innerHTML = PLATFORMS.map(pl => `<option value="${pl.key}">${pl.key}</option>`).join('');
+  document.getElementById('f-status').innerHTML = STATUS_ALL.map(s => `<option value="${s}">${s}</option>`).join('');
   const filterStatus = document.getElementById('filterStatus');
   STATUS_ALL.forEach(s => { const o = document.createElement('option'); o.value=s; o.textContent=s; filterStatus.appendChild(o); });
   const filterPlatform = document.getElementById('filterPlatform');
@@ -590,25 +520,14 @@ function populateSelects(){
 }
 
 async function init(){
-  await loadData();
   populateSelects();
   document.getElementById('monthPicker').value = currentMonth;
   document.getElementById('monthPicker').addEventListener('change', e => { currentMonth = e.target.value || currentMonth; renderMonthly(); });
   document.getElementById('searchBox').addEventListener('input', renderTable);
   document.getElementById('filterStatus').addEventListener('change', renderTable);
   document.getElementById('filterPlatform').addEventListener('change', renderTable);
-
-  document.getElementById('goalTarget').addEventListener('change', async (e) => {
-    dailyGoal = parseInt(e.target.value, 10) || 10;
-    await saveData();
-    renderGoal();
-  });
-
-  document.getElementById('exportBtn').addEventListener('click', exportBackup);
-  document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
-  document.getElementById('importFile').addEventListener('change', (e) => {
-    if(e.target.files[0]) importBackup(e.target.files[0]);
-  });
+  document.getElementById('goalTarget').addEventListener('change', (e) => { dailyGoal = parseInt(e.target.value, 10) || 10; renderGoal(); });
+  document.getElementById('refreshBtn').addEventListener('click', async () => { await loadFromSheet(); renderAll(); });
 
   document.querySelectorAll('thead th[data-key]').forEach(th => {
     th.addEventListener('click', () => {
@@ -623,9 +542,7 @@ async function init(){
     const company = document.getElementById('f-company').value.trim();
     if(!name){ alert('Enter a prospect name first.'); return; }
     const newProspect = normalizeProspect({
-      id: uid(),
-      date: todayStr(),
-      name, company,
+      id: uid(), date: todayStr(), name, company,
       platform: document.getElementById('f-platform').value,
       status: document.getElementById('f-status').value,
       nextFollowUp: document.getElementById('f-nextfollowup').value,
@@ -640,11 +557,11 @@ async function init(){
     document.getElementById('f-notes').value = '';
     document.getElementById('f-roi').checked = false;
     document.getElementById('f-audit').checked = false;
-    await saveData();
     renderAll();
-    sendToGoogleSheets(newProspect);
+    await postToSheet({ action:'add', ...newProspect });
   });
 
+  await loadFromSheet();
   renderAll();
 }
 init();
